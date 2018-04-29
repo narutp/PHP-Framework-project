@@ -9,7 +9,7 @@
         </div>
         <div align="left">
             <div class="user-management--title-wrapper">
-                <b>Address</b>
+                <b>Address</b><i class="fas fa-edit"></i>
                 <hr>
                 <el-row>
                     <p>78/56 moo1 sukhumvit road chonburi 20180</p>
