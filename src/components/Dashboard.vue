@@ -65,7 +65,4 @@ export default {
     padding: 0;
     margin: 0;
 }
-.dashboard--subcontainer {
-    padding: 30px;
-}
 </style>

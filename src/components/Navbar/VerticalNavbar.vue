@@ -31,7 +31,7 @@ export default {
     },
     methods: {
         editUser() {
-            this.$router.push('UserManagement')
+            this.$router.push('user')
         }
     }
 }

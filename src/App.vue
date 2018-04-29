@@ -6,7 +6,7 @@
         <vertical-nav></vertical-nav>
       </el-col>
       <el-col :span="20">
-        <el-row>
+        <el-row class="routerWrapper">
           <router-view/>
         </el-row>
       </el-col>
@@ -43,5 +43,8 @@ export default {
 }
 body {
   margin: 0
+}
+.routerWrapper {
+  padding: 30px;
 }
 </style>
