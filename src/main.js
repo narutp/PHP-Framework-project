@@ -7,6 +7,7 @@ import ElementUI from 'element-ui'
 import Bulma from 'bulma/css/bulma.css'
 import 'element-ui/lib/theme-default/index.css'
 
+
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(Bulma)
