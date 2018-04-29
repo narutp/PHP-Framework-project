@@ -39,7 +39,7 @@ export default {
 <style scoped>
 .navbar--container {
     margin: 0;
-    min-height: 100vh;
+    min-height: 150vh;
     background-color: #EEF1F6;
 }
 .navbar--user-name:hover {

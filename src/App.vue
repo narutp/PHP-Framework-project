@@ -11,12 +11,17 @@
         </el-row>
       </el-col>
     </el-row>
+    <el-row>
+      <footer-bar></footer-bar>
+    </el-row>
   </div>
 </template>
 
 <script>
 import VerticalNav from '@/components/Navbar/VerticalNavbar'
 import HorizontalNav from '@/components/Navbar/HorizontalNavbar'
+import FooterBar from '@/components/Footer'
+
 export default {
   name: 'App',
   data() {
@@ -27,7 +32,8 @@ export default {
   },
   components: {
     VerticalNav,
-    HorizontalNav
+    HorizontalNav,
+    FooterBar
   }
 }
 </script>
@@ -45,6 +51,6 @@ body {
   margin: 0
 }
 .routerWrapper {
-  padding: 30px;
+  padding: 50px;
 }
 </style>
