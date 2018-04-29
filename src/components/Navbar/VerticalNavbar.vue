@@ -2,10 +2,11 @@
     <div class="navbar--container">
         <el-menu default-active="1" class="navbar--navWrapper" @open="handleOpen" @close="handleClose">
             <img class="navbar--thumbnail" src="@/assets/logo.png"/>
+            <p class="navbar--user-name" v-on:click="editUser()">{{ name }}</p>
             <el-submenu index="1">
-                <template slot="title">Navigator One</template>
+                <template slot="title">User</template>
                 <el-menu-item-group title="Group One">
-                <el-menu-item index="1-1">item one</el-menu-item>
+                <el-menu-item index="1-1">Edit user</el-menu-item>
                 <el-menu-item index="1-2">item two</el-menu-item>
                 </el-menu-item-group>
                 <el-menu-item-group title="Group Two">
@@ -23,7 +24,16 @@
 </template>
 <script>
 export default {
-
+    data() {
+        return {
+            name: 'Narut Poovorakit'
+        }
+    },
+    methods: {
+        editUser() {
+            console.log('hrllo')
+        }
+    }
 }
 </script>
 <style scoped>
@@ -31,6 +41,10 @@ export default {
     margin: 0;
     min-height: 100vh;
     background-color: #EEF1F6;
+}
+.navbar--user-name:hover {
+    cursor: pointer;
+    color:blue;
 }
 .navbar--thumbnail {
     width: 75px;
