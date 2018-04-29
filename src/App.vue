@@ -1,12 +1,41 @@
 <template>
   <div id="app">
-    <router-view/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <el-row>
+      <horizontal-nav></horizontal-nav>
+      <el-col :span="4">
+        <vertical-nav></vertical-nav>
+      </el-col>
+      <el-col :span="20">
+        <el-row class="routerWrapper">
+          <router-view/>
+        </el-row>
+      </el-col>
+    </el-row>
+    <el-row>
+      <footer-bar></footer-bar>
+    </el-row>
   </div>
 </template>
 
 <script>
+import VerticalNav from '@/components/Navbar/VerticalNavbar'
+import HorizontalNav from '@/components/Navbar/HorizontalNavbar'
+import FooterBar from '@/components/Footer'
+
 export default {
-  name: 'App'
+  name: 'App',
+  data() {
+    return {
+    }
+  },
+  methods: {
+  },
+  components: {
+    VerticalNav,
+    HorizontalNav,
+    FooterBar
+  }
 }
 </script>
 
@@ -17,6 +46,16 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 0;
+}
+body {
+  margin: 0;
+  /* set important because preventing modal to set a new padding to body! */
+  padding: 0 !important;
+}
+.routerWrapper {
+  padding: 50px;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 </style>
