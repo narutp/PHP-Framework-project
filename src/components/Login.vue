@@ -1,5 +1,5 @@
 <template>
-  <div>  
+  <div>
     <el-row :gutter="20">
       <el-col :span="12" :offset="6">
         <div class="grid-content">
@@ -14,7 +14,7 @@
                   <el-input type="password" v-model="loginForm.pass" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button v-loading.fullscreen.lock="loading" style="width: 100%" type="primary" @click="submitForm('loginForm')">Submit</el-button>
+                  <el-button style="width: 100%" type="primary" @click="submitForm('loginForm')">Submit</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -27,10 +27,10 @@
 
 <script>
 import axios from 'axios'
+
 export default {
   name: 'Login',
   data () {
-    loading: false
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('Please input the password'));
@@ -56,26 +56,26 @@ export default {
     },
     methods: {
       submitForm(formName) {
-        this.loading = true
         const self = this
         this.$refs[formName].validate((valid) => {
           if (valid) {
             self.login()
           } else {
             console.log('error submit!!')
-            self.loading = false
             return false;
           }
         });
       },
       async login() {
+        // show loading
+        let loader = this.$loading.show()
         let loginResponse = await axios.post('http://localhost:8000/api/login', {
           email: this.loginForm.username,
           password: this.loginForm.pass
         })
-        this.loading = false
         if (loginResponse.data.message === 'Authenticated') {
           console.log('in')
+          loader.hide()
           this.$router.push('dashboard')
         } else {
           // TODO: something when login failed
