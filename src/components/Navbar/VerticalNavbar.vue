@@ -29,6 +29,8 @@ export default {
 <style scoped>
 .navbar--container {
     margin: 0;
+    min-height: 100vh;
+    background-color: #EEF1F6;
 }
 .navbar--thumbnail {
     width: 75px;
