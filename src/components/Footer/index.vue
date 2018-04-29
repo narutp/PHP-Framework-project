@@ -19,7 +19,4 @@ export default {
 }
 </script>
 <style scoped>
-footer {
-    /* padding-bottom: 50px; */
-}
 </style>

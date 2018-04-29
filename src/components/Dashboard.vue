@@ -2,34 +2,35 @@
     <div class="dashboard--container">
         <el-row>
             <div class="dashboard--subcontainer">
-                <el-table
-                    :data="tableData"
-                    border
-                    style="width: 100%">
+                <div align="right">
+                    <el-button @click="createLeaveForm()" style="margin-bottom: 10px" type="info">Create leave form <i class="fas fa-plus"></i></el-button>
+                </div>
+                <el-table :data="tableData" border style="width: 100%">
                     <el-table-column
-                    prop="date"
-                    label="Date"
-                    width="180">
+                        prop="date" label="Date" width="180">
                     </el-table-column>
                     <el-table-column
-                    prop="name"
-                    label="Name"
-                    width="180">
+                        prop="name" label="Name" width="180">
                     </el-table-column>
                     <el-table-column
-                    prop="address"
-                    label="Address">
+                        prop="address" label="Address">
                     </el-table-column>
                 </el-table>
             </div>
         </el-row>
+        <leave-form-dialog :leaveList="leaveFormList"></leave-form-dialog>
     </div>
 </template>
 
 <script>
+import LeaveFormDialog from '@/components/Dialog/LeaveFormDialog'
+
 export default {
     data() {
         return {
+            leaveFormList: {
+                dialogVisible: false
+            },
             tableData: [{
                 date: '2016-05-03',
                 name: 'Tom',
@@ -55,7 +56,13 @@ export default {
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath)
+      },
+      createLeaveForm () {
+          this.leaveFormList.dialogVisible = true
       }
+    },
+    components: {
+        LeaveFormDialog
     }
 }
 </script>

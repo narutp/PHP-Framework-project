@@ -49,9 +49,13 @@ export default {
   margin: 0;
 }
 body {
-  margin: 0
+  margin: 0;
+  /* set important because preventing modal to set a new padding to body! */
+  padding: 0 !important;
 }
 .routerWrapper {
   padding: 50px;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 </style>
