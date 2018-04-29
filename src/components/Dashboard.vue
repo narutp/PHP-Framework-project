@@ -1,42 +1,32 @@
 <template>
     <div class="dashboard--container">
         <el-row>
-            <horizontal-nav></horizontal-nav>
-        </el-row>
-        <el-row>
-            <el-col :span="4">
-                <vertical-nav></vertical-nav>
-            </el-col>
-            <el-col :span="20">
-                <div class="dashboard--subcontainer">
-                    <el-table
-                        :data="tableData"
-                        border
-                        style="width: 100%">
-                        <el-table-column
-                        prop="date"
-                        label="Date"
-                        width="180">
-                        </el-table-column>
-                        <el-table-column
-                        prop="name"
-                        label="Name"
-                        width="180">
-                        </el-table-column>
-                        <el-table-column
-                        prop="address"
-                        label="Address">
-                        </el-table-column>
-                    </el-table>
-                </div>
-            </el-col>
+            <div class="dashboard--subcontainer">
+                <el-table
+                    :data="tableData"
+                    border
+                    style="width: 100%">
+                    <el-table-column
+                    prop="date"
+                    label="Date"
+                    width="180">
+                    </el-table-column>
+                    <el-table-column
+                    prop="name"
+                    label="Name"
+                    width="180">
+                    </el-table-column>
+                    <el-table-column
+                    prop="address"
+                    label="Address">
+                    </el-table-column>
+                </el-table>
+            </div>
         </el-row>
     </div>
 </template>
 
 <script>
-import VerticalNav from '@/components/Navbar/VerticalNavbar'
-import HorizontalNav from '@/components/Navbar/HorizontalNavbar'
 export default {
     data() {
         return {
@@ -58,10 +48,6 @@ export default {
                 address: 'No. 189, Grove St, Los Angeles'
             }]
         }
-    },
-    components: {
-        VerticalNav,
-        HorizontalNav
     },
     methods: {
       handleOpen(key, keyPath) {

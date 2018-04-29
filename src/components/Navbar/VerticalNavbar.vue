@@ -31,7 +31,7 @@ export default {
     },
     methods: {
         editUser() {
-            console.log('hrllo')
+            this.$router.push('UserManagement')
         }
     }
 }

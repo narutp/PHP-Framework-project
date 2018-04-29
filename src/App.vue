@@ -1,12 +1,34 @@
 <template>
   <div id="app">
-    <router-view/>
+    <el-row>
+      <horizontal-nav></horizontal-nav>
+      <el-col :span="4">
+        <vertical-nav></vertical-nav>
+      </el-col>
+      <el-col :span="20">
+        <el-row>
+          <router-view/>
+        </el-row>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
+import VerticalNav from '@/components/Navbar/VerticalNavbar'
+import HorizontalNav from '@/components/Navbar/HorizontalNavbar'
 export default {
-  name: 'App'
+  name: 'App',
+  data() {
+    return {
+    }
+  },
+  methods: {
+  },
+  components: {
+    VerticalNav,
+    HorizontalNav
+  }
 }
 </script>
 
