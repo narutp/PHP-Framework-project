@@ -1,11 +1,11 @@
 <template>
     <div class="dashboard--container">
         <el-row>
-            
+            <horizontal-nav></horizontal-nav>
         </el-row>
         <el-row>
             <el-col :span="4">
-                <nav-bar></nav-bar>
+                <vertical-nav></vertical-nav>
             </el-col>
             <el-col :span="20">
                 <div class="grid-content bg-purple-dark">a</div>
@@ -15,14 +15,16 @@
 </template>
 
 <script>
-import NavBar from '@/components/Navbar'
+import VerticalNav from '@/components/Navbar/VerticalNavbar'
+import HorizontalNav from '@/components/Navbar/HorizontalNavbar'
 export default {
     data() {
         return {
         }
     },
     components: {
-        NavBar
+        VerticalNav,
+        HorizontalNav
     },
     methods: {
       handleOpen(key, keyPath) {

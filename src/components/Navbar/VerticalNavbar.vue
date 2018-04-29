@@ -1,6 +1,7 @@
 <template>
     <div class="navbar--container">
-        <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" theme="dark">
+        <el-menu default-active="1" class="navbar--navWrapper" @open="handleOpen" @close="handleClose">
+            <img class="navbar--thumbnail" src="@/assets/logo.png"/>
             <el-submenu index="1">
                 <template slot="title">Navigator One</template>
                 <el-menu-item-group title="Group One">
@@ -28,5 +29,12 @@ export default {
 <style scoped>
 .navbar--container {
     margin: 0;
+}
+.navbar--thumbnail {
+    width: 75px;
+    height: 75px;
+}
+.navbar--navWrapper {
+    padding-top: 15px;
 }
 </style>
