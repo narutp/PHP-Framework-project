@@ -17,8 +17,8 @@
                 <el-menu-item index="1-4-1">item one</el-menu-item>
                 </el-submenu>
             </el-submenu> -->
-            <el-menu-item index="2"><div align="left">History</div></el-menu-item>
-            <el-menu-item index="3"><div align="left">Leave information</div></el-menu-item>
+            <el-menu-item index="2"><div align="left">Tasks</div></el-menu-item>
+            <el-menu-item index="3"><div align="left">Leave history</div></el-menu-item>
         </el-menu>
     </div>
 </template>
