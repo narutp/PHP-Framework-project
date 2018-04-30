@@ -9,17 +9,18 @@
             <el-form-item label="Reason to leave">
                 <el-input type="textarea" v-model="form.desc"></el-input>
             </el-form-item>
-            <el-form-item label="Activity zone">
+            <el-form-item label="Type">
                 <div align="left">
-                    <el-select v-model="form.region" placeholder="please select your zone">
-                        <el-option label="Zone one" value="shanghai"></el-option>
-                        <el-option label="Zone two" value="beijing"></el-option>
+                    <el-select v-model="form.region" placeholder="Please select your type">
+                        <el-option label="Vacation leave" value="Vacation leave"></el-option>
+                        <el-option label="Personal Errand leave" value="Personal Errand leave"></el-option>
+                        <el-option label="Sick leave" value="Sick leave"></el-option>
                     </el-select>
                 </div>
             </el-form-item>
             <el-form-item label="Activity time">
                 <el-col :span="11">
-                <el-date-picker type="date" placeholder="Pick a date" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                <el-date-picker type="daterange" placeholder="Pick a date" v-model="form.date1" style="width: 100%;"></el-date-picker>
                 </el-col>
                 <el-col class="line" :span="2">-</el-col>
                 <el-col :span="11">

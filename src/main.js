@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/en'
 import Bulma from 'bulma/css/bulma.css'
 import Loading from 'vue-loading-overlay'
 import 'element-ui/lib/theme-default/index.css'
@@ -11,7 +12,7 @@ import 'vue-loading-overlay/dist/vue-loading.min.css'
 
 
 Vue.config.productionTip = false
-Vue.use(ElementUI)
+Vue.use(ElementUI, {locale})
 Vue.use(Bulma)
 Vue.use(Loading)
 /* eslint-disable no-new */
