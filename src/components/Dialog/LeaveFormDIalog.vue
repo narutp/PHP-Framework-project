@@ -7,25 +7,30 @@
         :before-close="handleClose">
         <el-form class="leave-form-dialog--dialog" ref="form" :model="form" label-width="120px" label-position="left">
             <el-form-item label="Reason to leave">
-                <el-input type="textarea" v-model="form.desc"></el-input>
+                <el-input type="textarea" v-model="form.reason"></el-input>
             </el-form-item>
             <el-form-item label="Type">
                 <div align="left">
-                    <el-select v-model="form.region" placeholder="Please select your type">
+                    <el-select v-model="form.type" placeholder="Please select your type">
                         <el-option label="Vacation leave" value="Vacation leave"></el-option>
                         <el-option label="Personal Errand leave" value="Personal Errand leave"></el-option>
                         <el-option label="Sick leave" value="Sick leave"></el-option>
                     </el-select>
                 </div>
             </el-form-item>
-            <el-form-item label="Activity time">
-                <el-col :span="11">
-                <el-date-picker type="daterange" placeholder="Pick a date" v-model="form.date1" style="width: 100%;"></el-date-picker>
-                </el-col>
-                <el-col class="line" :span="2">-</el-col>
-                <el-col :span="11">
-                <el-time-picker type="fixed-time" placeholder="Pick a time" v-model="form.date2" style="width: 100%;"></el-time-picker>
-                </el-col>
+            <el-form-item label="Select period">
+                <div align="left">
+                    <el-date-picker type="daterange" placeholder="Pick a date" v-model="form.date"></el-date-picker>
+                </div>
+            </el-form-item>
+            <el-form-item label="Select substitute user">
+                <div align="left">
+                    <el-select v-model="form.chosenUser" placeholder="Please select substitute">
+                        <el-option label="A" value="A"></el-option>
+                        <el-option label="B" value="B"></el-option>
+                        <el-option label="C" value="C"></el-option>
+                    </el-select>
+                </div>
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -41,7 +46,10 @@ export default {
   data () {
       return {
           form: {
-
+              reason: '',
+              type: '',
+              date: '',
+              chosenUser: ''
           }
       }
   },
