@@ -44,17 +44,22 @@
             </div>
         </el-row>
         <leave-form-dialog :leaveList="leaveFormList"></leave-form-dialog>
+        <create-task-dialog :taskList="taskList"></create-task-dialog>
     </div>
 </template>
 
 <script>
 import LeaveFormDialog from '@/components/Dialog/LeaveFormDialog'
+import CreateTaskDialog from '@/components/Dialog/CreateTaskDialog'
 
 export default {
     data() {
         return {
             type: 'supervisor',
             leaveFormList: {
+                dialogVisible: false
+            },
+            taskList: {
                 dialogVisible: false
             },
             tableData: [{
@@ -91,11 +96,12 @@ export default {
           this.leaveFormList.dialogVisible = true
       },
       createTask () {
-
+          this.taskList.dialogVisible = true
       }
     },
     components: {
-        LeaveFormDialog
+        LeaveFormDialog,
+        CreateTaskDialog
     }
 }
 </script>

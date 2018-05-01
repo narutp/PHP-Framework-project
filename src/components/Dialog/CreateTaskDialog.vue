@@ -25,7 +25,7 @@
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-            <el-button @click="leaveList.dialogVisible = false">Cancel</el-button>
+            <el-button @click="taskList.dialogVisible = false">Cancel</el-button>
             <el-button type="primary" @click="confirmLeave()">Confirm</el-button>
         </span>
     </el-dialog>
@@ -33,6 +33,7 @@
 </template>
 <script>
 export default {
+    props: ['taskList'],
     data() {
         return {
             task: {
