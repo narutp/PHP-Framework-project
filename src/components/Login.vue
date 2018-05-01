@@ -27,7 +27,7 @@
 
 <script>
 import axios from 'axios'
-
+import { setAuth } from './Libraries/Helper'
 export default {
   name: 'Login',
   data () {
@@ -80,7 +80,7 @@ export default {
         if (loginResponse.data.message === 'Authenticated') {
           loader.hide()
           // set type in local storage
-          let setType = await localStorage.setItem('user_type', loginResponse.data.type)
+          await setAuth(loginResponse.data)
           this.$router.push('dashboard')
         } else {
           loader.hide()
