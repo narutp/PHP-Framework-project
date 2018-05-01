@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-row :gutter="20">
-      <el-col :span="12" :offset="6">
+    <el-row>
+      <el-col :span="10" :offset="7">
         <div class="grid-content">
           <el-row>
             <el-form :model="loginForm" :rules="rules" ref="loginForm" label-position="top" label-width="120px" class="demo-ruleForm">
@@ -61,7 +61,11 @@ export default {
           if (valid) {
             self.login()
           } else {
-            console.log('error submit!!')
+            this.$message({
+              showClose: true,
+              message: 'Incorrect format!',
+              type: 'error'
+            });
             return false;
           }
         });
@@ -78,7 +82,12 @@ export default {
           loader.hide()
           this.$router.push('dashboard')
         } else {
-          // TODO: something when login failed
+          loader.hide()
+          this.$message({
+            showClose: true,
+            message: 'Your username or password is incorrect!',
+            type: 'error'
+          });
         }
       }
   }
