@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login--container">
     <el-row>
       <el-col :span="10" :offset="7">
         <div class="grid-content">
@@ -78,8 +78,9 @@ export default {
           password: this.loginForm.pass
         })
         if (loginResponse.data.message === 'Authenticated') {
-          console.log('in')
           loader.hide()
+          // set type in local storage
+          let setType = await localStorage.setItem('user_type', loginResponse.data.type)
           this.$router.push('dashboard')
         } else {
           loader.hide()
@@ -97,8 +98,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .login-container {
-  margin-left: 3rem;
-  margin-right: 3rem;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
 }
 .grid-content {
   border: 0.5px solid grey;

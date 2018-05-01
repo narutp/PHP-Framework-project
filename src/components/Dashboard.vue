@@ -1,7 +1,7 @@
 <template>
     <div class="dashboard--container">
         <el-row>
-            <div v-if="type === 'supervisor'" class="dashboard--subcontainer">
+            <div v-if="this.type === 'supervisor'" class="dashboard--subcontainer">
                 <div align="right">
                     <el-button @click="createTask()" style="margin-bottom: 10px" type="info">Create task <i class="fas fa-plus"></i></el-button>
                 </div>
@@ -23,7 +23,7 @@
                     </el-table-column>
                 </el-table>
             </div>
-            <div v-if="type === 'subordinate'" class="dashboard--subcontainer">
+            <div v-if="this.type === 'subordinate'" class="dashboard--subcontainer">
                 <div align="right">
                     <el-button @click="createLeaveForm()" style="margin-bottom: 10px" type="info">Create leave form <i class="fas fa-plus"></i></el-button>
                 </div>
@@ -55,7 +55,7 @@ import CreateTaskDialog from '@/components/Dialog/CreateTaskDialog'
 export default {
     data() {
         return {
-            type: 'supervisor',
+            type: '',
             leaveFormList: {
                 dialogVisible: false
             },
@@ -84,6 +84,10 @@ export default {
                 email: 'd@a.com'
             }]
         }
+    },
+    async mounted() {
+        this.type = localStorage.getItem('user_type')
+        console.log('type', this.type)
     },
     methods: {
       handleOpen(key, keyPath) {

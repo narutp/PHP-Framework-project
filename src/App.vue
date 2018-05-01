@@ -52,8 +52,12 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin: 0;
+  width: 100%;
+  height: 100%;
 }
 body {
+  width: 100%;
+  height: 100%;
   margin: 0;
   /* set important because preventing modal to set a new padding to body! */
   padding: 0 !important;
