@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
-    <el-row>
+    <!-- <el-row v-if="$route.path !== '/'">
       <horizontal-nav></horizontal-nav>
       <el-col :span="4">
         <vertical-nav></vertical-nav>
@@ -12,9 +12,14 @@
         </el-row>
       </el-col>
     </el-row>
-    <el-row>
-      <footer-bar></footer-bar>
-    </el-row>
+    <el-row v-else>
+      <el-col :span="24">
+        <el-row class="routerWrapper">
+          <router-view/>
+        </el-row>
+      </el-col>
+    </el-row> -->
+    <router-view/>
   </div>
 </template>
 

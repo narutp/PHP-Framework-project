@@ -2,8 +2,8 @@
     <div class="navbar--container">
         <el-menu default-active="1" class="navbar--navWrapper" @open="handleOpen" @close="handleClose">
             <img class="navbar--thumbnail" src="@/assets/logo.png"/>
-            <p class="navbar--user-name" v-on:click="editUser()">{{ name }}</p>
-            <el-submenu index="1">
+            <p style="margin-bottom: 20px" class="navbar--user-name" v-on:click="editUser()">{{ name }}</p>
+            <!-- <el-submenu index="1">
                 <template slot="title">User</template>
                 <el-menu-item-group title="Group One">
                 <el-menu-item index="1-1">Edit user</el-menu-item>
@@ -16,9 +16,9 @@
                 <template slot="title">item four</template>
                 <el-menu-item index="1-4-1">item one</el-menu-item>
                 </el-submenu>
-            </el-submenu>
-            <el-menu-item index="2">Navigator Two</el-menu-item>
-            <el-menu-item index="3">Navigator Three</el-menu-item>
+            </el-submenu> -->
+            <el-menu-item index="2"><div align="left">Tasks</div></el-menu-item>
+            <el-menu-item index="3"><div align="left">Leave history</div></el-menu-item>
         </el-menu>
     </div>
 </template>
