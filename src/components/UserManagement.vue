@@ -13,6 +13,7 @@
                             {{ name }}
                         <i @click="editUser()" class="fas fa-edit user-management--edit-icon"></i>
                         </div>
+                        <p style="margin-bottom: 20px; color: grey; font-size: 12px;">{{ user_type }}</p>
                     </div>
                     <div align="left">
                         <div class="user-management--title-wrapper">
@@ -84,10 +85,12 @@ export default {
           facebook: '',
           phone_number: '',
           email: '',
-          role: ''
+          role: '',
+          user_type: ''
       }
   },
   async mounted() {
+      this.user_type = localStorage.getItem('user_type')
       let getUser
       try {
           getUser = await getUserAPI.getUser()
