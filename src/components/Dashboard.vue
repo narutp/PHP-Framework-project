@@ -31,13 +31,16 @@
                         prop="created_at" label="Registered date" width="180">
                     </el-table-column>
                     <el-table-column
-                        prop="name" label="Name" width="180">
+                        prop="task_name" label="Task Name" width="140">
                     </el-table-column>
                     <el-table-column
-                        prop="address" label="Address">
+                        prop="description" label="Description" width="180">
                     </el-table-column>
                     <el-table-column
-                        prop="email" label="Email">
+                        prop="start_date" label="Start date">
+                    </el-table-column>
+                    <el-table-column
+                        prop="end_date" label="End date">
                     </el-table-column>
                 </el-table>
             </div>
@@ -69,7 +72,7 @@
 <script>
 import LeaveFormDialog from '@/components/Dialog/LeaveFormDialog'
 import CreateTaskDialog from '@/components/Dialog/CreateTaskDialog'
-import { getSubordinateAPI } from './Resource/index'
+import { getSubordinateAPI, getTaskAPI } from './Resource/index'
 
 export default {
     data() {
@@ -89,15 +92,17 @@ export default {
             }],
             tableTask: [{
                 created_at: '',
-                task: '',
-                address: '',
-                email: ''
+                task_name: '',
+                description: '',
+                start_date: '',
+                end_date: ''
             }]
         }
     },
     async mounted() {
         this.type = localStorage.getItem('user_type')
         await this.fetchSubordinate()
+        await this.fetchTask()
         console.log('type', this.type)
     },
     methods: {
@@ -110,6 +115,16 @@ export default {
             }
             console.log('fetchRes', fetchRes)
             this.tableData = fetchRes.data
+        },
+        async fetchTask() {
+            let fetchRes
+            try {
+                fetchRes = await getTaskAPI.getTask()
+            } catch (error) {
+                console.log(error)
+            }
+            console.log('taskRes', fetchRes)
+            this.tableTask = fetchRes.data
         },
         handleOpen(key, keyPath) {
             console.log(key, keyPath)
