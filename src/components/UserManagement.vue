@@ -1,7 +1,7 @@
 <template>
-  <div class="user-management--container">
-      <el-row>
-        <horizontal-nav></horizontal-nav>
+    <div class="user-management--container">
+        <el-row>
+            <horizontal-nav></horizontal-nav>
             <el-col :span="4">
                 <vertical-nav></vertical-nav>
             </el-col>
@@ -11,13 +11,13 @@
                         <img src="@/assets/logo.png" />
                         <div>
                             {{ name }}
+                        <i @click="editUser()" style="margin-left: 5px" class="fas fa-edit"></i>
                         </div>
                     </div>
                     <div align="left">
                         <div class="user-management--title-wrapper">
                             <el-row>
                                 <b>Address</b>
-                                <i style="position: absolute; right: 0" class="fas fa-edit"></i>
                             </el-row>
                             <hr>
                             <el-row>
@@ -25,8 +25,7 @@
                             </el-row>
                         </div>
                         <div class="user-management--title-wrapper">
-                            <b>Contact</b>     
-                            <i style="position: absolute; right: 0" class="fas fa-edit"></i>
+                            <b>Contact</b>
                             <hr>
                             <el-row>
                                 <el-col :span="4">
@@ -56,17 +55,22 @@
                     </div>
                 </el-row>
             </el-col>
-      </el-row>
-  </div>
+        </el-row>
+        <edit-user-dialog :editUserList="editUserList"></edit-user-dialog>
+    </div>
 </template>
 <script>
 import HorizontalNav from '@/components/Navbar/HorizontalNavbar'
 import VerticalNav from '@/components/Navbar/VerticalNavbar'
+import EditUserDialog from './Dialog/EditUserDialog'
 import { getUserAPI } from './Resource/index'
 
 export default {
   data() {
       return {
+          editUserList: {
+              dialogVisible: false
+          },
           name: "Narut Poovorakit"
       }
   },
@@ -79,9 +83,15 @@ export default {
       }
       console.log('get user: ', getUser)
   },
+  methods: {
+      editUser() {
+          this.editUserList.dialogVisible = true
+      }
+  },
   components: {
       HorizontalNav,
-      VerticalNav
+      VerticalNav,
+      EditUserDialog
   }
 }
 </script>
