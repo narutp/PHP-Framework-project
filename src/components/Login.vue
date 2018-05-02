@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <el-row :gutter="20">
-      <el-col :span="12" :offset="6">
+  <div class="login--container">
+    <el-row>
+      <el-col :span="10" :offset="7">
         <div class="grid-content">
           <el-row>
             <el-form :model="loginForm" :rules="rules" ref="loginForm" label-position="top" label-width="120px" class="demo-ruleForm">
@@ -27,7 +27,7 @@
 
 <script>
 import axios from 'axios'
-
+import { setAuth } from './Libraries/Helper'
 export default {
   name: 'Login',
   data () {
@@ -61,7 +61,11 @@ export default {
           if (valid) {
             self.login()
           } else {
-            console.log('error submit!!')
+            this.$message({
+              showClose: true,
+              message: 'Incorrect format!',
+              type: 'error'
+            });
             return false;
           }
         });
@@ -74,11 +78,17 @@ export default {
           password: this.loginForm.pass
         })
         if (loginResponse.data.message === 'Authenticated') {
-          console.log('in')
           loader.hide()
+          // set type in local storage
+          await setAuth(loginResponse.data)
           this.$router.push('dashboard')
         } else {
-          // TODO: something when login failed
+          loader.hide()
+          this.$message({
+            showClose: true,
+            message: 'Your username or password is incorrect!',
+            type: 'error'
+          });
         }
       }
   }
@@ -88,8 +98,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .login-container {
-  margin-left: 3rem;
-  margin-right: 3rem;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
 }
 .grid-content {
   border: 0.5px solid grey;

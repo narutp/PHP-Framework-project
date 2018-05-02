@@ -7,22 +7,35 @@
             <el-menu-item index="2-1">item one</el-menu-item>
             <el-menu-item index="2-2">item two</el-menu-item>
             <el-menu-item index="2-3">item three</el-menu-item>
-        </el-submenu>
-        <el-menu-item index="3"><a href="https://www.ele.me" target="_blank">Orders</a></el-menu-item> -->
+        </el-submenu> -->
+        <div style="position: absolute; right: 0">
+          <el-menu-item index="3" @click="signOut()"><p>Sign out</p></el-menu-item>
+        </div>
     </el-menu>
+    <signout-dialog :signoutList="signout"></signout-dialog>
   </div>
 </template>
 <script>
+import SignoutDialog from '@/components/Dialog/SignoutDialog'
 export default {
   data() {
     return {
       activeIndex: '1',
+      signout: {
+        dialogVisible: false
+      }
     }
   },
   methods: {
     navigateHome() {
       this.$router.push('/dashboard')
+    },
+    signOut() {
+      this.signout.dialogVisible = true
     }
+  },
+  components: {
+    SignoutDialog
   }
 }
 </script>
