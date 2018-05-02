@@ -28,6 +28,8 @@
 </template>
 <script>
 import { editUserAPI } from '../Resource/index'
+import { getUserAPI } from '../Resource/index'
+
 export default {
   props: ['editUserList'],
   data () {
@@ -40,7 +42,25 @@ export default {
           }
       }
   },
+  async mounted() {
+      await this.fetchUser()
+  },
   methods: {
+      async fetchUser() {
+        let loader = this.$loading.show()
+        let getUser
+        try {
+              getUser = await getUserAPI.getUser()
+              this.form.name = getUser.data.name
+              this.form.address = getUser.data.address
+              this.form.facebook = getUser.data.facebook
+              this.form.phone = getUser.data.phone_number
+        } catch (error) {
+            loader.hide()
+            console.log(error)
+        }
+        loader.hide()
+      },
       async editUser() {
           let editUserRes
           try {
@@ -50,6 +70,7 @@ export default {
           }
           console.log('edit user: ', editUserRes)
           this.editUserList.dialogVisible = false
+          this.$router.go()
       }
   }
 }

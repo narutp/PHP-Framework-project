@@ -51,6 +51,7 @@
 <script>
 import LeaveFormDialog from '@/components/Dialog/LeaveFormDialog'
 import CreateTaskDialog from '@/components/Dialog/CreateTaskDialog'
+import { getSubordinateAPI } from './Resource/index'
 
 export default {
     data() {
@@ -87,21 +88,31 @@ export default {
     },
     async mounted() {
         this.type = localStorage.getItem('user_type')
+        await this.fetchSubordinate()
         console.log('type', this.type)
     },
     methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath)
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath)
-      },
-      createLeaveForm () {
-          this.leaveFormList.dialogVisible = true
-      },
-      createTask () {
-          this.taskList.dialogVisible = true
-      }
+        async fetchSubordinate () {
+            let fetchRes
+            try {
+                fetchRes = await getSubordinateAPI.getSubordinateList()
+            } catch (error) {
+                console.log(error)
+            }
+            console.log('fetchRes', fetchRes)
+        },
+        handleOpen(key, keyPath) {
+            console.log(key, keyPath)
+        },
+        handleClose(key, keyPath) {
+            console.log(key, keyPath)
+        },
+        createLeaveForm () {
+            this.leaveFormList.dialogVisible = true
+        },
+        createTask () {
+            this.taskList.dialogVisible = true
+        }
     },
     components: {
         LeaveFormDialog,
