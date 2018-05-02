@@ -15,9 +15,6 @@
             <el-form-item label="Facebook">
                 <el-input type="text" v-model="form.facebook"></el-input>
             </el-form-item>
-            <el-form-item label="Email">
-                <el-input type="text" v-model="form.email"></el-input>
-            </el-form-item>
             <el-form-item label="Phone number">
                 <el-input type="text" v-model="form.phone"></el-input>
             </el-form-item>
@@ -38,7 +35,6 @@ export default {
               name: '',
               address: '',
               facebook: '',
-              email: '',
               phone: ''
           }
       }

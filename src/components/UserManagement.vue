@@ -11,7 +11,7 @@
                         <img src="@/assets/logo.png" />
                         <div>
                             {{ name }}
-                        <i @click="editUser()" style="margin-left: 5px" class="fas fa-edit"></i>
+                        <i @click="editUser()" class="fas fa-edit user-management--edit-icon"></i>
                         </div>
                     </div>
                     <div align="left">
@@ -102,6 +102,12 @@ export default {
 }
 .user-management--title-wrapper {
     margin-bottom: 45px;
+}
+.user-management--edit-icon {
+    margin-left: 5px;
+}
+.user-management--edit-icon:hover {
+    cursor: pointer;
 }
 </style>
 
