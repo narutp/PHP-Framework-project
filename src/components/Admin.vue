@@ -3,73 +3,43 @@
     <el-tabs type="border-card">
       <el-tab-pane label="Create">
         <el-form ref="form" :model="form" label-width="120px">
-          <el-form-item label="E-mail: ">
-            <el-input v-model="form.name"></el-input>
-          </el-form-item>
-          <!-- <el-form-item label="Activity zone">
-            <el-select v-model="form.region" placeholder="please select your zone">
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item> -->
-          <el-form-item label="Password" prop="pass">
-            <el-input type="password" v-model="form.pass" auto-complete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="Departments">
-            <el-dropdown>
-              <span class="el-dropdown-link">
-                Departments<i class="el-icon-arrow-down el-icon--right"></i>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>Action 1</el-dropdown-item>
-                <el-dropdown-item>Action 2</el-dropdown-item>
-                <el-dropdown-item>Action 3</el-dropdown-item>
-                <el-dropdown-item>Action 4</el-dropdown-item>
-                <el-dropdown-item>Action 5</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </el-form-item>
-          <el-form-item label="Roles">
-            <el-radio-group v-model="form.resource">
-              <el-radio label="Sponsor"></el-radio>
-              <el-radio label="Venue"></el-radio>
-            </el-radio-group>
-          </el-form-item>
-
-
-          <el-form-item label="Activity time">
-            <el-col :span="11">
-              <el-date-picker type="date" placeholder="Pick a date" v-model="form.date1" style="width: 100%;"></el-date-picker>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-time-picker type="fixed-time" placeholder="Pick a time" v-model="form.date2" style="width: 100%;"></el-time-picker>
-            </el-col>
-          </el-form-item>
-          <el-form-item label="Instant delivery">
-            <el-switch on-text="" off-text="" v-model="form.delivery"></el-switch>
-          </el-form-item>
-          <el-form-item label="Activity type">
-            <el-checkbox-group v-model="form.type">
-              <el-checkbox label="Online activities" name="type"></el-checkbox>
-              <el-checkbox label="Promotion activities" name="type"></el-checkbox>
-              <el-checkbox label="Offline activities" name="type"></el-checkbox>
-              <el-checkbox label="Simple brand exposure" name="type"></el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item label="Resources">
-            <el-radio-group v-model="form.resource">
-              <el-radio label="Sponsor"></el-radio>
-              <el-radio label="Venue"></el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="Activity form">
-            <el-input type="textarea" v-model="form.desc"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">Create</el-button>
-            <el-button>Cancel</el-button>
-          </el-form-item>
+          <div style="padding-left: 300px; padding-right: 300px;">
+            <el-form-item label="Name: " prop="username" align="left">
+              <el-input v-model="form.name"></el-input>
+            </el-form-item>
+            <el-form-item label="E-mail: ">
+              <el-input v-model="form.email"></el-input>
+            </el-form-item>
+            <el-form-item label="Password" prop="pass">
+              <el-input type="password" v-model="form.password" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="Line ID: ">
+              <el-input v-model="form.lineid"></el-input>
+            </el-form-item>
+            <el-form-item label="Profile Picture: ">
+              <el-input v-model="form.profile_picture"></el-input>
+            </el-form-item>
+            <el-form-item label="Address: ">
+              <el-input v-model="form.address"></el-input>
+            </el-form-item>
+            <el-form-item label="Type" align="left">
+              <el-select v-model="form.type" placeholder="type">
+                <el-option label="Admin" value="admin"></el-option>
+                <el-option label="Supervisor" value="supervisor"></el-option>
+                <el-option label="Subordinates" value="subordinate"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="Facebook: ">
+              <el-input v-model="form.facebook"></el-input>
+            </el-form-item>
+            <el-form-item label="Phone Number: ">
+              <el-input v-model="form.phone_number"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="createUser()">Create</el-button>
+            </el-form-item>
+          </div>
+          
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="Manage">
@@ -80,26 +50,38 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { createUserAPI } from './Resource'
 export default {
+    name: 'Admin',
     data() {
       return {
+        header: "Admin",
         form: {
           name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: '',
-          pass: '',
-          radio: '1'
+          email: '',
+          password: '',
+          lineid: '',
+          is_admin: false,
+          type: '',
+          address: '',
+          facebook: '',
+          phone_number: '',
         }
       }
     },
     methods: {
-      onSubmit() {
-        console.log('submit!');
+      async createUser() {
+            let createRes
+            let is_admin = !(this.form.type == "supervisor" || this.form.type == "subordinate")
+            console.log(this.form)
+            try {
+                createRes = await createUserAPI.createUser(this.form.name, this.form.email, 
+                this.form.password, this.form.lineid, is_admin, this.form.type, this.form.address, this.form.facebook, this.form.phone_number)
+            } catch (error) {
+                console.log(error)
+            }
+            console.log('create response', createRes)
       }
     }
   }
