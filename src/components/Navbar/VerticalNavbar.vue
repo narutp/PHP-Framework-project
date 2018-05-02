@@ -3,16 +3,16 @@
         <el-menu v-if="user_type === 'supervisor'" default-active="1" class="navbar--navWrapper" @open="handleOpen" @close="handleClose">
             <img class="navbar--thumbnail" src="@/assets/logo.png"/>
             <p style="margin-bottom: 20px" class="navbar--user-name" v-on:click="editUser()">{{ name }}</p>
-            <el-menu-item index="2"><div align="left">Tasks</div></el-menu-item>
-            <el-menu-item index="3"><div align="left">Leave history</div></el-menu-item>
-            <el-menu-item index="3"><div align="left">Leave request</div></el-menu-item>
+            <el-menu-item index="2" @click="navigateToHome()"><div align="left">Home</div></el-menu-item>
+            <el-menu-item index="3"><div align="left">Tasks</div></el-menu-item>
+            <el-menu-item index="4"><div align="left">Leave history</div></el-menu-item>
+            <el-menu-item index="5"><div align="left">Leave request</div></el-menu-item>
         </el-menu>
         <el-menu v-else default-active="1" class="navbar--navWrapper" @open="handleOpen" @close="handleClose">
             <img class="navbar--thumbnail" src="@/assets/logo.png"/>
             <p style="margin-bottom: 20px" class="navbar--user-name" v-on:click="editUser()">{{ name }}</p>
-            <el-menu-item index="2"><div align="left">Tasks</div></el-menu-item>
-            <el-menu-item index="3"><div align="left">Leave history</div></el-menu-item>
-            <el-menu-item index="3"><div align="left">Leave request</div></el-menu-item>
+            <el-menu-item index="2" @click="navigateToHome()"><div align="left">Home</div></el-menu-item>
+            <el-menu-item index="4"><div align="left">Leave request</div></el-menu-item>
         </el-menu>
     </div>
 </template>
@@ -31,6 +31,9 @@ export default {
     methods: {
         editUser() {
             this.$router.push('user')
+        },
+        navigateToHome() {
+            this.$router.push('dashboard')
         },
         async fetchUser() {
             let loader = this.$loading.show()
