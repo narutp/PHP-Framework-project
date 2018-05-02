@@ -8,9 +8,27 @@
                 <div class="dashboard--title" align="left">
                     <b>List of subordinates</b>
                 </div>
-                <el-table :data="tableData" border style="width: 100%">
+                <el-table :data="tableData" border style="width: 100%; margin-bottom: 20px">
                     <el-table-column
-                        prop="date" label="Registered date" width="180">
+                        prop="created_at" label="Registered date" width="180">
+                    </el-table-column>
+                    <el-table-column
+                        prop="name" label="Name" width="180">
+                    </el-table-column>
+                    <el-table-column
+                        prop="address" label="Address">
+                    </el-table-column>
+                    <el-table-column
+                        prop="email" label="Email">
+                    </el-table-column>
+                </el-table>
+
+                <div class="dashboard--title" align="left">
+                    <b>List of tasks</b>
+                </div>
+                <el-table :data="tableTask" border style="width: 100%">
+                    <el-table-column
+                        prop="created_at" label="Registered date" width="180">
                     </el-table-column>
                     <el-table-column
                         prop="name" label="Name" width="180">
@@ -51,6 +69,7 @@
 <script>
 import LeaveFormDialog from '@/components/Dialog/LeaveFormDialog'
 import CreateTaskDialog from '@/components/Dialog/CreateTaskDialog'
+import { getSubordinateAPI } from './Resource/index'
 
 export default {
     data() {
@@ -63,45 +82,47 @@ export default {
                 dialogVisible: false
             },
             tableData: [{
-                date: '2016-05-03',
-                name: 'Tom',
-                address: 'No. 189, Grove St, Los Angeles',
-                email: 'a@a.com'
-                }, {
-                date: '2016-05-02',
-                name: 'Tom',
-                address: 'No. 189, Grove St, Los Angeles',
-                email: 'a@a.com'
-                }, {
-                date: '2016-05-04',
-                name: 'Tom',
-                address: 'No. 189, Grove St, Los Angeles',
-                email: 'a@a.com'
-                }, {
-                date: '2016-05-01',
-                name: 'Tom',
-                address: 'No. 189, Grove St, Los Angeles',
-                email: 'd@a.com'
+                created_at: '',
+                name: '',
+                address: '',
+                email: ''
+            }],
+            tableTask: [{
+                created_at: '',
+                task: '',
+                address: '',
+                email: ''
             }]
         }
     },
     async mounted() {
         this.type = localStorage.getItem('user_type')
+        await this.fetchSubordinate()
         console.log('type', this.type)
     },
     methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath)
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath)
-      },
-      createLeaveForm () {
-          this.leaveFormList.dialogVisible = true
-      },
-      createTask () {
-          this.taskList.dialogVisible = true
-      }
+        async fetchSubordinate () {
+            let fetchRes
+            try {
+                fetchRes = await getSubordinateAPI.getSubordinateList()
+            } catch (error) {
+                console.log(error)
+            }
+            console.log('fetchRes', fetchRes)
+            this.tableData = fetchRes.data
+        },
+        handleOpen(key, keyPath) {
+            console.log(key, keyPath)
+        },
+        handleClose(key, keyPath) {
+            console.log(key, keyPath)
+        },
+        createLeaveForm () {
+            this.leaveFormList.dialogVisible = true
+        },
+        createTask () {
+            this.taskList.dialogVisible = true
+        }
     },
     components: {
         LeaveFormDialog,
