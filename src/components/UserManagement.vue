@@ -62,11 +62,22 @@
 <script>
 import HorizontalNav from '@/components/Navbar/HorizontalNavbar'
 import VerticalNav from '@/components/Navbar/VerticalNavbar'
+import { getUserAPI } from './Resource/index'
+
 export default {
   data() {
       return {
           name: "Narut Poovorakit"
       }
+  },
+  async mounted() {
+      let getUser
+      try {
+          getUser = await getUserAPI.getUser()
+      } catch (error) {
+          console.log(error)
+      }
+      console.log('get user: ', getUser)
   },
   components: {
       HorizontalNav,

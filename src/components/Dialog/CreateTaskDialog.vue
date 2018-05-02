@@ -7,10 +7,10 @@
         :before-close="handleClose">
         <el-form class="create-task-dialog--dialog" ref="form" :model="form" label-width="120px" label-position="left">
             <el-form-item label="Task name">
-                <el-input type="text" v-model="task.name"></el-input>
+                <el-input type="text" v-model="task.name" placeholder="Input a task name"></el-input>
             </el-form-item>
             <el-form-item label="Task description">
-                <el-input type="textarea" v-model="task.description"></el-input>
+                <el-input type="textarea" v-model="task.description" placeholder="Input a description"></el-input>
             </el-form-item>
             <el-form-item label="Select period">
                 <div align="left">
@@ -69,15 +69,16 @@ export default {
                 //         'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjU3Mjg2OTk4Y2NiNmZiNGI3N2VmNDE3ZGI0Y2NjYmRkODEzZTc0MWUyYWUzNWVmMTZjMWY1MDBkMDFjYWU1OTA2MzJmMjdlMWIyNzIyZDM1In0.eyJhdWQiOiIyIiwianRpIjoiNTcyODY5OThjY2I2ZmI0Yjc3ZWY0MTdkYjRjY2NiZGQ4MTNlNzQxZTJhZTM1ZWYxNmMxZjUwMGQwMWNhZTU5MDYzMmYyN2UxYjI3MjJkMzUiLCJpYXQiOjE1MjUyMTM5NTksIm5iZiI6MTUyNTIxMzk1OSwiZXhwIjoxNTU2NzQ5OTU5LCJzdWIiOiIxMSIsInNjb3BlcyI6W119.kVO6gm1KfUUuTPEcNKW7V28j2LxzheWM16piLxE4iG5UJMXsnRlMC0Im7BMskpXLbSKjOz5SdJYcDiHr15OYWa2RSC9KRPIbf61RvTevYjkS3RuUm6aU6e27dLV1Un2SKRK_AIYwn83rFzNFLTip0Yjb3YpbC9e8Q48ojH6GIr8ba3ZY4xKzywcLEYp9oXoFaQgeI-OA4oQXuNbyy_PvBQdQwlg_qvPsoQxSZXSoKHBHK6Sf0WufoJPRCDLJ7b9s_nXinJRCOVcBwvURlnl-P2xhbv48dKY_wZaVQ7DSFoSYLHELfPSN1ZM0g6Vguk59r4IzUYw6H4DYhI228vHcvD_5jJ_ZNvuP7stFX84gEiiKBz2o00XOwq9ypyDPs5tPHab042r48naGCG7iTcZzzi0JWH_ruH2mDz3Nh9vgSlTbgPshqKBv2U4uOa_bEO1Mb36mM05G6OThPAUB7ICuGtqQrWKKt2lGa7rqk_jvc8uHTIbhzEVthGVjVA4Jo4FhtCqJ2gCL-1YpO_iioiw5J08Qqm9SgxW2t9keVKtQi7FhVCBK7VL343zjnle16p7Mju6jiRk6dO6dEzxGSibABsfbMPpON4zdd79c0IYEkapwkiDAB-ytWRpI8XY6OtE2C63AW2_Uqxz2LvjWjAT7496UWi3EYgZADTIfNAjpn-I'
                 //     }
                 // })
-                let createRes = await createTaskAPI.createTask('Kuay', 'Nahee', this.task.date[0], this.task.date[1], 1, 1)
+                
+                let date1 = moment(this.task.date[0]).format('YYYY-MM-DD')
+                let date2 = moment(this.task.date[1]).format('YYYY-MM-DD')
+                createRes = await createTaskAPI.createTask(this.task.name, this.task.description, 
+                date1, date2, 1)
+                this.taskList.dialogVisible = false
             } catch (error) {
                 console.log(error)
             }
             console.log('create response', createRes)
-            let date1 = moment(this.task.date[0]).format('YYYY-MM-DD')
-            console.log('Date1 ', date1)
-            console.log('Date2 ', this.task.date[1])
-            
         }
     }
 }
