@@ -26,7 +26,7 @@
                 <div class="dashboard--title" align="left">
                     <b>List of tasks</b>
                 </div>
-                <el-table v-loading.body="loading" :data="tableTask" border style="width: 100%">
+                <el-table v-loading.body="loading" :data="tableTask" border style="width: 100% margin-bottom: 20px">
                     <el-table-column
                         prop="created_at" label="Registered date" width="180">
                     </el-table-column>
@@ -37,13 +37,56 @@
                         prop="description" label="Description" width="180">
                     </el-table-column>
                     <el-table-column
-                        prop="start_date" label="Start date">
+                        label="Start date">
+                        <template scope="scope">
+                            <el-icon name="time"></el-icon>
+                            <span style="margin-left: 10px">{{ scope.row.start_date }}</span>
+                        </template>
                     </el-table-column>
                     <el-table-column
-                        prop="end_date" label="End date">
+                        label="End date">
+                        <template scope="scope">
+                            <el-icon name="time"></el-icon>
+                            <span style="margin-left: 10px">{{ scope.row.end_date }}</span>
+                        </template>
+                    </el-table-column>
+                </el-table>
+
+                <div class="dashboard--title" align="left">
+                    <b>Leave history</b>
+                </div>
+                <el-table v-loading.body="loading" :data="tableHistory" border style="width: 100% margin-bottom: 20px">
+                    <el-table-column
+                        prop="user.name" label="Name" width="180">
+                    </el-table-column>
+                    <el-table-column
+                        prop="user.phone_number" label="Phone number" width="180">
+                    </el-table-column>
+                    <el-table-column
+                        label="Start date" width="140">
+                        <template scope="scope">
+                            <el-icon name="time"></el-icon>
+                            <span style="margin-left: 10px">{{ scope.row.start_date }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        label="End date" width="180">
+                        <template scope="scope">
+                            <el-icon name="time"></el-icon>
+                            <span style="margin-left: 10px">{{ scope.row.end_date }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        label="Status">
+                        <template scope="scope">
+                            <el-tag
+                            :type="scope.row.status === 'requested' ? 'info' : scope.row.status === 'approved' ? 'success' : 'danger'"
+                            close-transition>{{scope.row.status}}</el-tag>
+                        </template>
                     </el-table-column>
                 </el-table>
             </div>
+            <!-- subordinate part -->
             <div v-if="this.type === 'subordinate'" class="dashboard--subcontainer">
                 <div align="right">
                     <el-button @click="createLeaveForm()" style="margin-bottom: 10px" type="info">Create leave form <i class="fas fa-plus"></i></el-button>
@@ -72,7 +115,7 @@
 <script>
 import LeaveFormDialog from '@/components/Dialog/LeaveFormDialog'
 import CreateTaskDialog from '@/components/Dialog/CreateTaskDialog'
-import { getSubordinateAPI, getTaskAPI } from './Resource/index'
+import { getSubordinateAPI, getTaskAPI, getHistoryAPI } from './Resource/index'
 
 export default {
     data() {
@@ -97,6 +140,13 @@ export default {
                 start_date: '',
                 end_date: ''
             }],
+            tableHistory: [{
+                'user.name': '',
+                'user.photo_number': '',
+                start_date: '',
+                end_date: '',
+                status: ''
+            }],
             loading: false
         }
     },
@@ -105,6 +155,7 @@ export default {
         this.type = localStorage.getItem('user_type')
         await this.fetchSubordinate()
         await this.fetchTask()
+        await this.fetchHistory()
         console.log('type', this.type)
     },
     methods: {
@@ -128,6 +179,19 @@ export default {
             console.log('taskRes', fetchRes)
             this.tableTask = fetchRes.data
             this.loading = false
+        },
+        async fetchHistory() {
+            let fetchRes
+            try {
+                fetchRes = await getHistoryAPI.getHistory()
+            } catch(error) {
+                console.log(error)
+            }
+            console.log('history', fetchRes.data)
+            this.tableHistory = fetchRes.data
+            // fetchRes.data.forEach(element => {
+            //     console.log('in', element.user)
+            // });
         },
         handleOpen(key, keyPath) {
             console.log(key, keyPath)
