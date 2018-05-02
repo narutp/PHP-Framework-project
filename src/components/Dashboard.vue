@@ -8,7 +8,7 @@
                 <div class="dashboard--title" align="left">
                     <b>List of subordinates</b>
                 </div>
-                <el-table :data="tableData" border style="width: 100%; margin-bottom: 20px">
+                <el-table v-loading.body="loading" :data="tableData" border style="width: 100%; margin-bottom: 20px">
                     <el-table-column
                         prop="created_at" label="Registered date" width="180">
                     </el-table-column>
@@ -26,7 +26,7 @@
                 <div class="dashboard--title" align="left">
                     <b>List of tasks</b>
                 </div>
-                <el-table :data="tableTask" border style="width: 100%">
+                <el-table v-loading.body="loading" :data="tableTask" border style="width: 100%">
                     <el-table-column
                         prop="created_at" label="Registered date" width="180">
                     </el-table-column>
@@ -96,10 +96,12 @@ export default {
                 description: '',
                 start_date: '',
                 end_date: ''
-            }]
+            }],
+            loading: false
         }
     },
     async mounted() {
+        this.loading = true
         this.type = localStorage.getItem('user_type')
         await this.fetchSubordinate()
         await this.fetchTask()
@@ -125,6 +127,7 @@ export default {
             }
             console.log('taskRes', fetchRes)
             this.tableTask = fetchRes.data
+            this.loading = false
         },
         handleOpen(key, keyPath) {
             console.log(key, keyPath)
