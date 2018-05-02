@@ -27,6 +27,7 @@
   </div>
 </template>
 <script>
+import { editUserAPI } from '../Resource/index'
 export default {
   props: ['editUserList'],
   data () {
@@ -40,7 +41,14 @@ export default {
       }
   },
   methods: {
-      editUser() {
+      async editUser() {
+          let editUserRes
+          try {
+              editUserRes = await editUserAPI.editUser(this.form.name, this.form.address, this.form.facebook, this.form.phone)
+          } catch(error) {
+              console.log(error)
+          }
+          console.log('edit user: ', editUserRes)
           this.editUserList.dialogVisible = false
       }
   }

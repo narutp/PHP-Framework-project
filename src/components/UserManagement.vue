@@ -21,7 +21,7 @@
                             </el-row>
                             <hr>
                             <el-row>
-                                <p>78/56 moo1 sukhumvit road chonburi 20180</p>
+                                <p>{{ address }}</p>
                             </el-row>
                         </div>
                         <div class="user-management--title-wrapper">
@@ -29,26 +29,34 @@
                             <hr>
                             <el-row>
                                 <el-col :span="4">
-                                    <p>Facebook</p>
+                                    <p>Facebook:</p>
                                 </el-col>
                                 <el-col :span="10">
-                                    <p>Narut Poovorakit</p>
+                                    <p>{{ facebook }}</p>
                                 </el-col>
                             </el-row>
                             <el-row>
                                 <el-col :span="4">
-                                    <p>Phone number</p>
+                                    <p>Phone number:</p>
                                 </el-col>
                                 <el-col :span="10">
-                                    <p>0818189081</p>
+                                    <p>{{ phone_number }}</p>
                                 </el-col>
                             </el-row>
                             <el-row>
                                 <el-col :span="4">
-                                    <p>Email</p>
+                                    <p>Email:</p>
                                 </el-col>
                                 <el-col :span="10">
-                                    <p>narut.p@ku.th</p>
+                                    <p>{{ email }}</p>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="4">
+                                    <p>Role:</p>
+                                </el-col>
+                                <el-col :span="10">
+                                    <p>{{ role }}</p>
                                 </el-col>
                             </el-row>
                         </div>
@@ -71,7 +79,12 @@ export default {
           editUserList: {
               dialogVisible: false
           },
-          name: "Narut Poovorakit"
+          name: 'Narut Poovorakit',
+          address: '',
+          facebook: '',
+          phone_number: '',
+          email: '',
+          role: ''
       }
   },
   async mounted() {
@@ -82,10 +95,18 @@ export default {
           console.log(error)
       }
       console.log('get user: ', getUser)
+      this.fetchUser(getUser.data)
   },
   methods: {
       editUser() {
           this.editUserList.dialogVisible = true
+      },
+      fetchUser(data) {
+          this.name = data.name
+          this.address = data.address
+          this.facebook = data.facebook
+          this.phone_number = data.phone_number
+          this.role = data.type
       }
   },
   components: {
