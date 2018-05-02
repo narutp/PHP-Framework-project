@@ -76,8 +76,6 @@ export default {
 }
 </script>
 <style scoped>
-.edit-user-dialog--container {
-}
 .edit-user-dialog--dialog {
     margin: 20px;
 }

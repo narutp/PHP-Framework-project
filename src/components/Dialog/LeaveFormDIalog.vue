@@ -61,8 +61,6 @@ export default {
 }
 </script>
 <style scoped>
-.leave-form-dialog--container {
-}
 .leave-form-dialog--dialog {
     margin: 20px;
 }

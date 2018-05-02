@@ -20,9 +20,12 @@
             <el-form-item label="Select user">
                 <div align="left">
                     <el-select v-model="task.user" placeholder="Please select user">
-                        <el-option label="A" value="A"></el-option>
-                        <el-option label="B" value="B"></el-option>
-                        <el-option label="C" value="C"></el-option>
+                        <el-option
+                            v-for="item in fetchArr" 
+                            :key="item.id"
+                            :label="item.name" 
+                            :value="item.id">
+                        </el-option>
                     </el-select>
                 </div>
             </el-form-item>
@@ -35,7 +38,7 @@
   </div>
 </template>
 <script>
-import { createTaskAPI } from '../Resource'
+import { getSubordinateAPI, createTaskAPI } from '../Resource'
 import axios from 'axios'
 import moment from 'moment'
 
@@ -47,14 +50,23 @@ export default {
                 name: '',
                 description: '',
                 date: '',
-                user: ''
+                user: '',
+                fetchArr: []
             }
         }
     },
-    mounted() {
+    async mounted() {
+        let fetchRes
+        try {
+            fetchRes = await getSubordinateAPI.getSubordinateList()
+        } catch (error) {
+            console.log(error)
+        }
+        this.fetchArr = fetchRes.data
     },
     methods: {
         async createTask() {
+            let loader = this.$loading.show()
             let createRes
             try {
                 // let createRes = await axios.post('localhost:8000/create_task', {
@@ -70,15 +82,18 @@ export default {
                 //     }
                 // })
                 
+                console.log('tt', this.task.user)
                 let date1 = moment(this.task.date[0]).format('YYYY-MM-DD')
                 let date2 = moment(this.task.date[1]).format('YYYY-MM-DD')
                 createRes = await createTaskAPI.createTask(this.task.name, this.task.description, 
-                date1, date2, 1)
+                date1, date2, this.task.user)
                 this.taskList.dialogVisible = false
+                loader.hide()
+                this.$router.go()
             } catch (error) {
+                loader.hide()
                 console.log(error)
             }
-            console.log('create response', createRes)
         }
     }
 }
