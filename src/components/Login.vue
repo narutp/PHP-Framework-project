@@ -1,12 +1,17 @@
 <template>
-  <div class="login--container">
+  <div class="login--container" style="background-color: black">
+    <el-row style="min-height: 100px">
+      <div style="position: absolute">
+        <img class="login--bg" src="@/assets/bg.jpg"/>
+      </div>
+    </el-row>
     <el-row>
-      <el-col :span="10" :offset="7">
+      <el-col :span="8" :offset="8">
         <div class="grid-content">
           <el-row>
-            <el-form :model="loginForm" :rules="rules" ref="loginForm" label-position="top" label-width="120px" class="demo-ruleForm">
+            <el-form :model="loginForm" :rules="rules" ref="loginForm" label-position="top" label-width="80px" class="demo-ruleForm">
               <p class="title">LOGIN</p>
-              <div style="padding-left: 75px; padding-right: 75px;">
+              <div style="padding-left: 50px; padding-right: 50px">
                 <el-form-item label="Username" prop="username" align="left">
                   <el-input type="text" v-model="loginForm.username" auto-complete="off"></el-input>
                 </el-form-item>
@@ -14,7 +19,7 @@
                   <el-input type="password" v-model="loginForm.pass" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button style="width: 100%" type="primary" @click="submitForm('loginForm')">Submit</el-button>
+                  <el-button style="width: 100%" type="primary" @click="submitForm('loginForm')">SUBMIT</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -91,7 +96,7 @@ export default {
           });
         }
       }
-  }
+    }
 }
 </script>
 
@@ -102,14 +107,23 @@ export default {
   align-items: center;
   /* justify-content: center; */
 }
+.login--bg {
+  opacity: 0.5;
+  min-width: 1366px;
+  min-height: 500px;
+}
 .grid-content {
+  z-index: 9999;
+  margin-bottom: 50px;
+  background-color: white;
   border: 0.5px solid grey;
-  padding: 20px;
+  padding: 30px;
   border-radius: 4px;
   min-height: 36px;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 255, .2);
 }
 .row-bg {
-  padding: 10px 0;
+  padding: 5px 0;
   background-color: #f9fafc;
 }
 .title {
