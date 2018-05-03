@@ -16,9 +16,6 @@
             <el-form-item label="Line ID: ">
               <el-input v-model="form.lineid"></el-input>
             </el-form-item>
-            <el-form-item label="Profile Picture: ">
-              <el-input v-model="form.profile_picture"></el-input>
-            </el-form-item>
             <el-form-item label="Address: ">
               <el-input v-model="form.address"></el-input>
             </el-form-item>
