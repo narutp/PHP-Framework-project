@@ -4,9 +4,10 @@
             <div class="container">
                 <div class="content has-text-centered">
                     <p>
-                        <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-                        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-                        is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+                        <strong>Project</strong> by <a href="http://iup.eng.ku.ac.th/index.php/en/study-programs/software-and-knowledge-engineering.html">Software and Knowledge Engineering</a>. 
+                        <a href="http://www.ku.ac.th/web2012/index.php?c=adms&m=mainpage1">Kasetsart university</a>.<br>
+                        <i class="fab fa-github"></i>
+                        <a href="https://github.com/narutp/webapp-project-frontend">Github</a>.
                     </p>
                 </div>
             </div>
@@ -19,4 +20,7 @@ export default {
 }
 </script>
 <style scoped>
+.footer--container {
+    background-color: antiquewhite;
+}
 </style>

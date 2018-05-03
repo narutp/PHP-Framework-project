@@ -94,7 +94,7 @@
                 <div class="dashboard--title" align="left">
                     <b>List of tasks</b>
                 </div>
-                <!-- <el-table v-loading.body="loading" :data="tableTask" border style="width: 100% margin-bottom: 20px">
+                <el-table v-loading.body="loading" :data="tableSubTask" border style="width: 100% margin-bottom: 20px">
                     <el-table-column
                         prop="created_at" label="Registered date" width="180">
                     </el-table-column>
@@ -118,7 +118,7 @@
                             <span style="margin-left: 10px">{{ scope.row.end_date }}</span>
                         </template>
                     </el-table-column>
-                </el-table> -->
+                </el-table>
             </div>
         </el-row>
         <leave-form-dialog :leaveList="leaveFormList"></leave-form-dialog>
@@ -154,6 +154,13 @@ export default {
                 start_date: '',
                 end_date: ''
             }],
+            tableSubTask: [{
+                created_at: '',
+                task_name: '',
+                description: '',
+                start_date: '',
+                end_date: ''
+            }],
             tableHistory: [{
                 'user.name': '',
                 'user.photo_number': '',
@@ -166,10 +173,12 @@ export default {
     },
     async mounted() {
         this.loading = true
-        this.type = localStorage.getItem('user_type')
+        this.type = await localStorage.getItem('user_type')
         await this.fetchSubordinate()
         await this.fetchTask()
         await this.fetchHistory()
+        await this.fetchSubordinateTask()
+        this.loading = false
         console.log('type', this.type)
     },
     methods: {
@@ -192,7 +201,6 @@ export default {
             }
             console.log('taskRes', fetchRes)
             this.tableTask = fetchRes.data
-            this.loading = false
         },
         async fetchHistory() {
             let fetchRes
@@ -206,6 +214,16 @@ export default {
             // fetchRes.data.forEach(element => {
             //     console.log('in', element.user)
             // });
+        },
+        async fetchSubordinateTask() {
+            let fetchRes
+            try {
+                fetchRes = await getTaskAPI.getSubordinateTask()
+            } catch (error) {
+                console.log(error)
+            }
+            console.log('fetch response', fetchRes)
+            this.tableSubTask = fetchRes.data
         },
         handleOpen(key, keyPath) {
             console.log(key, keyPath)
