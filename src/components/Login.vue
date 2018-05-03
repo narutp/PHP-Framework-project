@@ -110,11 +110,11 @@ export default {
 .login--bg {
   opacity: 0.5;
   min-width: 1366px;
-  min-height: 500px;
+  max-height: 650px;
 }
 .grid-content {
   z-index: 9999;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
   background-color: white;
   border: 0.5px solid grey;
   padding: 30px;
