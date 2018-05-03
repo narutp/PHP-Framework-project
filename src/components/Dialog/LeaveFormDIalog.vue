@@ -6,9 +6,6 @@
         size="small"
         :before-close="handleClose">
         <el-form class="leave-form-dialog--dialog" ref="form" :model="form" label-width="120px" label-position="left">
-            <el-form-item label="Reason to leave">
-                <el-input type="textarea" v-model="form.reason"></el-input>
-            </el-form-item>
             <el-form-item label="Type">
                 <div align="left">
                     <el-select v-model="form.type" placeholder="Please select your type">
@@ -25,10 +22,13 @@
             </el-form-item>
             <el-form-item label="Select substitute user">
                 <div align="left">
-                    <el-select v-model="form.chosenUser" placeholder="Please select substitute">
-                        <el-option label="A" value="A"></el-option>
-                        <el-option label="B" value="B"></el-option>
-                        <el-option label="C" value="C"></el-option>
+                    <el-select v-model="form.substitute" placeholder="Please select substitute">
+                        <el-option
+                            v-for="item in chosenUser" 
+                            :key="item.id"
+                            :label="item.name" 
+                            :value="item.id">
+                        </el-option>
                     </el-select>
                 </div>
             </el-form-item>
@@ -41,20 +41,46 @@
   </div>
 </template>
 <script>
+import { createLeaveAPI, getColleagueAPI } from '../Resource/index'
+import moment from 'moment'
+
 export default {
   props: ['leaveList'],
   data () {
       return {
           form: {
-              reason: '',
               type: '',
               date: '',
-              chosenUser: ''
-          }
+              substitute: ''
+          },
+          chosenUser: ''
       }
   },
+  async mounted() {
+      console.log('in')
+      await this.fetchColleague()
+  },
   methods: {
-      confirmLeave() {
+      async fetchColleague() {
+          let getColRes
+          try {
+              getColRes = await getColleagueAPI.getColleague()
+          } catch (error) {
+              console.log(error)
+          }
+          console.log('getCOl', getColRes)
+          this.chosenUser = getColRes.data
+      },
+      async confirmLeave() {
+          let date1 = moment(this.form.date[0]).format('YYYY-MM-DD')
+          let date2 = moment(this.form.date[1]).format('YYYY-MM-DD')
+          let res
+          try {
+              res = await createLeaveAPI.createLeaveForm(this.form.type, date1, date2, this.form.substitute)
+          } catch (error) {
+              console.log(error)
+          }
+          console.log('res', res)
           this.leaveList.dialogVisible = false
       }
   }
