@@ -6,6 +6,10 @@ import GetColleagueAPI from './GetColleagueAPI'
 import GetTaskAPI from './GetTaskAPI'
 import GetHistoryAPI from './GetHistoryAPI'
 import EditUserAPI from './EditUserAPI'
+import CreateUserAPI from './CreateUserAPI'
+import ManageUserAPI from './ManageUserAPI';
+import GetUsersAPI from './GetUsersAPI'
+import SetDepartmentAPI from './SetDepartmentAPI'
 
 export const createTaskAPI = new CreateTaskAPI()
 export const createLeaveAPI = new CreateLeaveAPI()
@@ -15,3 +19,7 @@ export const getColleagueAPI = new GetColleagueAPI()
 export const getTaskAPI = new GetTaskAPI()
 export const getHistoryAPI = new GetHistoryAPI()
 export const editUserAPI = new EditUserAPI()
+export const createUserAPI = new CreateUserAPI()
+export const getUsersAPI = new GetUsersAPI()
+export const manageUserAPI = new ManageUserAPI()
+export const setDepartmentAPI = new SetDepartmentAPI()
