@@ -8,7 +8,7 @@
             <el-col :span="20">
                 <el-row class="routerWrapper">
                     <div class="user-management--image-wrapper">
-                        <img src="@/assets/logo.png" />
+                        <img style="max-width: 175px; max-height: 175px" src="@/assets/thumbnail.png" />
                         <div>
                             {{ name }}
                         <i @click="editUser()" class="fas fa-edit user-management--edit-icon"></i>
