@@ -42,14 +42,14 @@ export default {
 
 <style scoped>
 .el-menu-demo {
-  background-color: #C70039;
+  background-color: grey;
 }
 .el-menu-item {
   color: white;
 }
 .el-menu-item:hover {
   color: white;
-  background-color: #900C3E !important;
+  background-color: grey !important;
 }
 </style>
 

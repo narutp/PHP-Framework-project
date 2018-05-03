@@ -252,5 +252,6 @@ export default {
 }
 .dashboard--title {
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 </style>
