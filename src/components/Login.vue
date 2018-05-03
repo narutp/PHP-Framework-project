@@ -1,7 +1,9 @@
 <template>
-  <div class="login--container" style="background-color: #900C3E">
+  <div class="login--container" style="background-color: black">
     <el-row style="min-height: 100px">
-
+      <div style="position: absolute">
+        <img class="login--bg" src="@/assets/bg.jpg"/>
+      </div>
     </el-row>
     <el-row>
       <el-col :span="8" :offset="8">
@@ -25,14 +27,12 @@
         </div>
       </el-col>
     </el-row>
-    <FooterBar />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { setAuth } from './Libraries/Helper'
-import FooterBar from './Footer'
 export default {
   name: 'Login',
   data () {
@@ -96,9 +96,6 @@ export default {
           });
         }
       }
-    },
-    components: {
-      FooterBar
     }
 }
 </script>
@@ -109,6 +106,11 @@ export default {
   display: flex;
   align-items: center;
   /* justify-content: center; */
+}
+.login--bg {
+  opacity: 0.5;
+  min-width: 1366px;
+  min-height: 500px;
 }
 .grid-content {
   z-index: 9999;
