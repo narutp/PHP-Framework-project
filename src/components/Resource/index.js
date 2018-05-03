@@ -10,6 +10,7 @@ import CreateUserAPI from './CreateUserAPI'
 import ManageUserAPI from './ManageUserAPI';
 import GetUsersAPI from './GetUsersAPI'
 import SetDepartmentAPI from './SetDepartmentAPI'
+import GetLeavesRequestAPI from './GetLeavesRequestAPI'
 
 export const createTaskAPI = new CreateTaskAPI()
 export const createLeaveAPI = new CreateLeaveAPI()
@@ -18,6 +19,7 @@ export const getSubordinateAPI = new GetSubordinateAPI()
 export const getColleagueAPI = new GetColleagueAPI()
 export const getTaskAPI = new GetTaskAPI()
 export const getHistoryAPI = new GetHistoryAPI()
+export const getLeavesRequestAPI = new GetLeavesRequestAPI()
 export const editUserAPI = new EditUserAPI()
 export const createUserAPI = new CreateUserAPI()
 export const getUsersAPI = new GetUsersAPI()
