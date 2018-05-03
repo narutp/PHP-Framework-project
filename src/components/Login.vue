@@ -86,7 +86,11 @@ export default {
           loader.hide()
           // set type in local storage
           await setAuth(loginResponse.data)
-          this.$router.push('dashboard')
+          if (loginResponse.data.type === 'admin') {
+            this.$router.push('admin')
+          } else {
+            this.$router.push('dashboard')
+          }
         } else {
           loader.hide()
           this.$message({
