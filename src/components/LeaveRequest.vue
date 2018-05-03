@@ -10,15 +10,12 @@
                     <div class="dashboard--title" align="left">
                     <b>Leave request</b>
                 </div>
-                <el-table v-loading.body="loading" :data="tableSubTask" border style="width: 100% margin-bottom: 20px">
+                <el-table v-loading.body="loading" :data="tableLeave" border style="width: 100% margin-bottom: 20px">
                     <el-table-column
-                        prop="created_at" label="Registered date" width="180">
+                        prop="created_at" label="Request date" width="180">
                     </el-table-column>
                     <el-table-column
-                        prop="task_name" label="Task Name" width="140">
-                    </el-table-column>
-                    <el-table-column
-                        prop="description" label="Description" width="180">
+                        prop="type" label="Type" width="140">
                     </el-table-column>
                     <el-table-column
                         label="Start date">
@@ -32,6 +29,14 @@
                         <template scope="scope">
                             <el-icon name="time"></el-icon>
                             <span style="margin-left: 10px">{{ scope.row.end_date }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        label="Status">
+                        <template scope="scope">
+                            <el-tag
+                            :type="scope.row.status === 'requested' ? 'info' : scope.row.status === 'approved' ? 'success' : 'danger'"
+                            close-transition>{{scope.row.status}}</el-tag>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -49,6 +54,30 @@ export default {
     data() {
         return {
             loading: false,
+            tableLeave: [{
+                created_at: '',
+                type: '',
+                start_date: '',
+                end_date: '',
+                status: ''
+            }],
+        }
+    },
+    async mounted() {
+        this.loading = true
+        this.fetchRequest()
+    },
+    methods: {
+        async fetchRequest() {
+            let res
+            try {
+                res = await getLeavesRequestAPI.getLeavesRequest()
+            } catch (error) {
+                consoe.log(error)
+            }
+            console.log('ressss', res)
+            this.tableLeave = res.data
+            this.loading = false
         }
     },
     components: {
