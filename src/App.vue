@@ -19,7 +19,12 @@
         </el-row>
       </el-col>
     </el-row> -->
-    <router-view/>
+    <el-row>
+      <router-view/>
+    </el-row>
+    <el-row>
+      <FooterBar />
+    </el-row>
   </div>
 </template>
 
