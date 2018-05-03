@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import DashboardLayout from '@/components/DashboardLayout'
 import UserManagement from '@/components/UserManagement'
+import Admin from '@/components/Admin'
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ export default new Router({
       path: '/user',
       name: 'UserManagement',
       component: UserManagement
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: Admin
     }
   ]
 })
