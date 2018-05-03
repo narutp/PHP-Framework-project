@@ -77,6 +77,36 @@
           </div>
         </el-form>
       </el-tab-pane>
+
+      <el-tab-pane label="Users table">
+        <el-form ref="form" :model="form" label-width="120px">
+          <div style="padding-left: 300px; padding-right: 300px;">
+            <el-table
+              :data="user"
+              border
+              style="width: 100%">
+              <el-table-column
+                prop="id"
+                label="Id"
+                width="180">
+              </el-table-column>
+              <el-table-column
+                prop="name"
+                label="Name">
+              </el-table-column>
+              <el-table-column
+                prop="type"
+                label="Roll">
+              </el-table-column>
+              <el-table-column
+                prop="department"
+                label="Department">
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-form>
+      </el-tab-pane>
+
     </el-tabs>
   </div>
 </template>
