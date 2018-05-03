@@ -69,11 +69,20 @@ export default {
     },
     methods: {
         async fetchRequest() {
+            let user_type = await localStorage.getItem('user_type')
             let res
-            try {
-                res = await getLeavesRequestAPI.getLeavesRequest()
-            } catch (error) {
-                consoe.log(error)
+            if (user_type === 'subordinate') {
+                try {
+                    res = await getLeavesRequestAPI.getLeavesRequest()
+                } catch (error) {
+                    consoe.log(error)
+                }
+            } else {
+                try {
+                    res = await getLeavesRequestAPI.getSubordinateLeaves()
+                } catch (error) {
+                    console.log(error)
+                }
             }
             console.log('ressss', res)
             this.tableLeave = res.data
