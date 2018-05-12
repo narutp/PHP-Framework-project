@@ -32,11 +32,24 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                        label="Status">
+                        label="Status"
+                        align="center">
                         <template scope="scope">
                             <el-tag
                             :type="scope.row.status === 'requested' ? 'info' : scope.row.status === 'approved' ? 'success' : 'danger'"
                             close-transition>{{scope.row.status}}</el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        label="Options"
+                        width="90"
+                        align="center">
+                        <template scope="scope">
+                            <el-button icon="menu" 
+                                type="info" 
+                                size="mini"
+                                @click="confirmRequest(scope.row.id)" 
+                            />
                         </template>
                     </el-table-column>
                 </el-table>
@@ -55,6 +68,7 @@ export default {
         return {
             loading: false,
             tableLeave: [{
+                id: '',
                 created_at: '',
                 type: '',
                 start_date: '',
@@ -84,9 +98,12 @@ export default {
                     console.log(error)
                 }
             }
-            console.log('ressss', res)
+            console.log('get leave', res)
             this.tableLeave = res.data
             this.loading = false
+        },
+        confirmRequest(leaveId) {
+            console.log('leaveId', leaveId)
         }
     },
     components: {
