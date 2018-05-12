@@ -15,19 +15,20 @@
                         prop="created_at" label="Request date" width="180">
                     </el-table-column>
                     <el-table-column
+                        prop="user.name" label="Name">
+                    </el-table-column>
+                    <el-table-column
                         prop="type" label="Type" width="140">
                     </el-table-column>
                     <el-table-column
                         label="Start date">
                         <template scope="scope">
-                            <el-icon name="time"></el-icon>
                             <span style="margin-left: 10px">{{ scope.row.start_date }}</span>
                         </template>
                     </el-table-column>
                     <el-table-column
                         label="End date">
                         <template scope="scope">
-                            <el-icon name="time"></el-icon>
                             <span style="margin-left: 10px">{{ scope.row.end_date }}</span>
                         </template>
                     </el-table-column>
@@ -48,7 +49,7 @@
                             <el-button icon="menu" 
                                 type="info" 
                                 size="mini"
-                                @click="confirmRequest(scope.row.id)" 
+                                @click="confirmRequest(scope.row.id, scope.row.user.name, scope.row.type)" 
                             />
                         </template>
                     </el-table-column>
@@ -56,11 +57,13 @@
                 </el-row>
             </el-col>
         </el-row>
+        <confirm-leave-dialog :confirmList="confirmList"/>
     </div>
 </template>
 <script>
 import HorizontalNav from './Navbar/HorizontalNavbar'
 import VerticalNav from './Navbar/VerticalNavbar'
+import ConfirmLeaveDialog from './Dialog/ConfirmLeaveDialog'
 import { getLeavesRequestAPI } from './Resource/index'
 
 export default {
@@ -69,12 +72,19 @@ export default {
             loading: false,
             tableLeave: [{
                 id: '',
+                'user.name': '',
                 created_at: '',
                 type: '',
                 start_date: '',
                 end_date: '',
                 status: ''
             }],
+            confirmList: {
+                dialogVisible: false,
+                leaveId: '',
+                name: '',
+                type: ''
+            }
         }
     },
     async mounted() {
@@ -102,13 +112,18 @@ export default {
             this.tableLeave = res.data
             this.loading = false
         },
-        confirmRequest(leaveId) {
-            console.log('leaveId', leaveId)
+        confirmRequest(leaveId, name, type) {
+            this.confirmList.leaveId = leaveId
+            this.confirmList.name = name
+            this.confirmList.type = type
+            this.confirmList.dialogVisible = true
+            console.log('leaveId', name)
         }
     },
     components: {
         HorizontalNav,
-        VerticalNav
+        VerticalNav,
+        ConfirmLeaveDialog
     }
 }
 </script>
