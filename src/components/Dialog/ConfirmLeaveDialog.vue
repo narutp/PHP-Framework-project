@@ -16,7 +16,7 @@
   </div>
 </template>
 <script>
-
+import confirmLeaveRequestAPI from '../Resource/ConfirmLeaveRequestAPI'
 export default {
   props: ['confirmList'],
   data () {
@@ -24,8 +24,26 @@ export default {
       }
   },
   methods: {
-      rejectLeave() {
-          confirmList.dialogVisible = false
+      async confirmLeave() {
+          let confirmRes
+          let self = this
+          try {
+              confirmRes = await confirmLeaveRequestAPI.confirmLeave(self.confirmList.leaveId)
+          } catch (error) {
+              console.log(error)
+          }
+          this.confirmList.dialogVisible = false
+          this.$router.go()
+      },
+      async rejectLeave() {
+          let rejectRes
+          let self = this
+          try {
+              rejectRes = await rejectLeaveRequestAPI.confirmLeave(self.confirmList.leaveId)
+          } catch (error) {
+              console.log(error)
+          }
+          this.confirmList.dialogVisible = false
       }
   }
 }
