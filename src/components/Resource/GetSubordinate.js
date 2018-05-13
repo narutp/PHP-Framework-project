@@ -2,7 +2,7 @@ import HttpRequest from './HttpRequest'
 
 class GetSubordinate extends HttpRequest {
     getSubordinateList() {
-        return this.get('/user/subordinates')
+        return this.get('/users?type=subordinate')
     }
 }
 
