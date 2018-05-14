@@ -16,7 +16,7 @@
   </div>
 </template>
 <script>
-import confirmLeaveRequestAPI from '../Resource/ConfirmLeaveRequestAPI'
+import { confirmLeaveRequestAPI } from '../Resource/index'
 export default {
   props: ['confirmList'],
   data () {
@@ -32,6 +32,7 @@ export default {
           } catch (error) {
               console.log(error)
           }
+          console.log('confirmRes', confirmRes)
           this.confirmList.dialogVisible = false
           this.$router.go()
       },

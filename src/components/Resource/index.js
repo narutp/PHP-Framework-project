@@ -11,9 +11,11 @@ import ManageUserAPI from './ManageUserAPI';
 import GetUsersAPI from './GetUsersAPI'
 import SetDepartmentAPI from './SetDepartmentAPI'
 import GetLeavesRequestAPI from './GetLeavesRequestAPI'
+import ConfirmLeaveRequestAPI from './ConfirmLeaveRequestAPI'
 
 export const createTaskAPI = new CreateTaskAPI()
 export const createLeaveAPI = new CreateLeaveAPI()
+export const confirmLeaveRequestAPI = new ConfirmLeaveRequestAPI()
 export const getUserAPI = new GetUserAPI()
 export const getSubordinateAPI = new GetSubordinateAPI()
 export const getColleagueAPI = new GetColleagueAPI()

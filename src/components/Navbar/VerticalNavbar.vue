@@ -1,7 +1,7 @@
 <template>
     <div class="navbar--container">
         <el-menu v-if="user_type === 'supervisor'" default-active="1" class="navbar--navWrapper" @open="handleOpen" @close="handleClose">
-            <img class="navbar--thumbnail" src="@/assets/logo.png"/>
+            <img class="navbar--thumbnail" src="@/assets/thumbnail.png"/>
             <p class="navbar--user-name" v-on:click="editUser()">{{ name }}</p>
             <p style="margin-bottom: 20px; color: grey; font-size: 12px;">{{ user_type }}</p>
             <el-menu-item index="1" @click="navigateToHome()"><div align="left">Home</div></el-menu-item>
