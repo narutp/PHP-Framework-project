@@ -20,7 +20,7 @@
               </el-table-column>
               <el-table-column
                 prop="type"
-                label="Roll">
+                label="Role">
               </el-table-column>
               <el-table-column
                 prop="department"
@@ -76,17 +76,17 @@
         <el-form ref="form" :model="form" label-width="120px">
           <div style="padding-left: 300px; padding-right: 300px;">
             <el-form-item label="Supervisors" align="left">
-              <el-select v-model="form.id_edit" placeholder="supervisors">
+              <el-select v-model="form.supervisor_id" placeholder="supervisors">
                 <el-option v-for='item in supervisor' :key='item.id' :label="item.name" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="Subordinates" align="left">
-              <el-select v-model="form.type_edit" placeholder="subordinates">
+              <el-select v-model="form.subordinate_id" placeholder="subordinates">
                 <el-option v-for='item in subordinate' :key='item.id' :label="item.name" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="manageUser()">Confirm</el-button>
+              <el-button type="primary" @click="setHierarchy()">Confirm</el-button>
             </el-form-item>
           </div>
         </el-form>
@@ -109,31 +109,6 @@
         </el-form>
       </el-tab-pane>
 
-      <el-tab-pane label="Set profile picture">
-        <el-form ref="form" :model="form" label-width="120px">
-          <div style="padding-left: 300px; padding-right: 300px;">
-            <el-upload
-              class="upload-demo"
-              action=""
-              ref="upload"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              :before-remove="beforeRemove"
-              :auto-upload="false"
-              :multiple="false"
-              :limit="1"
-              :on-exceed="handleExceed"
-              :file-list="fileList">
-              <el-button size="small" type="primary">Click to upload</el-button>
-              <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
-            </el-upload>
-            <el-form-item>
-              <el-button type="primary" @click="handleClickPrintReport()">Confirm</el-button>
-            </el-form-item>
-          </div>
-        </el-form>
-      </el-tab-pane>
-
     </el-tabs>
   </div>
 </template>
@@ -147,6 +122,7 @@ import { getSupervisorAPI } from './Resource'
 import { getSubordinateAPI } from './Resource'
 import { setDepartmentAPI } from './Resource'
 import { updateImageAPI } from './Resource'
+import { setHierarchyAPI } from './Resource'
 import firebase from './Libraries/firebase'
 
 let storage = firebase.storage();
@@ -172,7 +148,9 @@ export default {
           type_edit: '', 
           users: [],
           id_edit: null,
-          department: ''
+          department: '',
+          supervisor_id: '',
+          subordinate_id: ''
         },
         supervisor: [],
         subordinate: [],
@@ -266,13 +244,13 @@ export default {
           // Upload completed successfully, now we can get the download URL
           uploadTask.snapshot.ref.getDownloadURL().then(async function(downloadURL) {
             console.log('File available at', downloadURL);
-            // let createRes
-            // try {
-            //     createRes = await updateImageAPI.updateImage(downloadURL)
-            // } catch (error) {
-            //     console.log(error)
-            // }
-            // location.reload();
+            let createRes
+            try {
+                createRes = await updateImageAPI.updateImage(downloadURL)
+            } catch (error) {
+                console.log(error)
+            }
+            location.reload();
           });
         });
       },
@@ -280,6 +258,15 @@ export default {
         let createRes
         try {
             createRes = await manageUserAPI.manageUser(this.form.id_edit, this.form.type_edit)
+        } catch (error) {
+            console.log(error)
+        }
+        location.reload();
+      },
+      async setHierarchy() {
+        let createRes
+        try {
+            createRes = await setHierarchyAPI.setHierarchy(this.form.supervisor_id, this.form.subordinate_id)
         } catch (error) {
             console.log(error)
         }

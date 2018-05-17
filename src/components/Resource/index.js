@@ -12,6 +12,7 @@ import ManageUserAPI from './ManageUserAPI'
 import GetUsersAPI from './GetUsersAPI'
 import SetDepartmentAPI from './SetDepartmentAPI'
 import UpdateImageAPI from './UpdateImageAPI'
+import SetHierarchyAPI from './SetHierarchyAPI'
 
 export const createTaskAPI = new CreateTaskAPI()
 export const createLeaveAPI = new CreateLeaveAPI()
@@ -27,3 +28,4 @@ export const getUsersAPI = new GetUsersAPI()
 export const manageUserAPI = new ManageUserAPI()
 export const setDepartmentAPI = new SetDepartmentAPI()
 export const updateImageAPI = new UpdateImageAPI()
+export const setHierarchyAPI = new SetHierarchyAPI()

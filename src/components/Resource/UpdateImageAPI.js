@@ -4,7 +4,7 @@ class UpdateImageAPI extends HttpRequest {
 
     updateImage(url_image) {
         return this.put('/user', {
-            url_image
+          profile_picture : url_image
         })
     }
 }
