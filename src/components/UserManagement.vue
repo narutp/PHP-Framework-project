@@ -8,7 +8,7 @@
             <el-col :span="20">
                 <el-row class="routerWrapper">
                     <div class="user-management--image-wrapper">
-                        <img src="@/assets/logo.png" />
+                        <img class="picture-profile-size" :src="imageUrl" />
                         <div>
                             {{ name }}
                         <i @click="editUser()" class="fas fa-edit user-management--edit-icon"></i>
@@ -86,7 +86,8 @@ export default {
           phone_number: '',
           email: '',
           role: '',
-          user_type: ''
+          user_type: '',
+          imageUrl: ''
       }
   },
   async mounted() {
@@ -110,6 +111,7 @@ export default {
           this.facebook = data.facebook
           this.phone_number = data.phone_number
           this.role = data.type
+          this.imageUrl = data.profile_picture
       }
   },
   components: {
@@ -132,6 +134,10 @@ export default {
 }
 .user-management--edit-icon:hover {
     cursor: pointer;
+}
+.picture-profile-size {
+  width: auto;
+  height: 170px;
 }
 </style>
 
