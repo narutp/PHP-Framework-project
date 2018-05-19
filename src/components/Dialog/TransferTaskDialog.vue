@@ -5,7 +5,7 @@
         :visible.sync="transferList.dialogVisible"
         size="tiny">
         <div align="center">
-            <el-select style="width: 300px" v-model="user" placeholder="Please select user to transfer task">
+            <el-select style="width: 300px" v-model="userid" placeholder="Please select user to transfer task">
                 <el-option
                     v-for="item in this.transferList.subordinateList" 
                     :key="item.id"
@@ -22,12 +22,12 @@
   </div>
 </template>
 <script>
-import { confirmLeaveRequestAPI } from '../Resource/index'
+import { transferTaskAPI } from '../Resource/index'
 export default {
   props: ['transferList'],
   data () {
       return {
-          user: ''
+          userid: ''
       }
   },
   mounted() {
@@ -37,8 +37,10 @@ export default {
       cancle() {
           this.transferList.dialogVisible = false
       },
-      transferTask() {
-          
+      async transferTask() {
+          let res = await transferTaskAPI.transferTask(this.transferList.taskId, this.userid)
+          console.log('res', res)
+          this.transferList.dialogVisible = false
       }
   }
 }

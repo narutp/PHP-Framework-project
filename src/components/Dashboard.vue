@@ -146,7 +146,8 @@ export default {
             },
             transferList: {
                 dialogVisible: false,
-                subordinateList: []
+                subordinateList: [],
+                taskId: ''
             },
             tableData: [{
                 created_at: '',
@@ -234,6 +235,8 @@ export default {
                 console.log(error)
             }
             console.log('fetch response', fetchRes)
+            this.transferList.taskId = fetchRes.data[0].id
+            console.log('bbbbbbbbbbbb', fetchRes.data[0].id)
             this.tableSubTask = fetchRes.data
         },
         handleOpen(key, keyPath) {

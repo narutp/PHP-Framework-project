@@ -15,6 +15,7 @@ import GetLeavesRequestAPI from './GetLeavesRequestAPI'
 import ConfirmLeaveRequestAPI from './ConfirmLeaveRequestAPI'
 import UpdateImageAPI from './UpdateImageAPI'
 import SetHierarchyAPI from './SetHierarchyAPI'
+import TransferTaskAPI from './TransferTaskAPI'
 
 export const createTaskAPI = new CreateTaskAPI()
 export const createLeaveAPI = new CreateLeaveAPI()
@@ -33,3 +34,4 @@ export const manageUserAPI = new ManageUserAPI()
 export const setDepartmentAPI = new SetDepartmentAPI()
 export const updateImageAPI = new UpdateImageAPI()
 export const setHierarchyAPI = new SetHierarchyAPI()
+export const transferTaskAPI = new TransferTaskAPI()
