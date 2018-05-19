@@ -29,7 +29,7 @@
             </el-table>
           </div>
           <div style="padding-top: 1rem;">
-            <el-button @click="tableToExcel('testTable', 'User Table')">Print Report</el-button>
+            <el-button @click="printReport()">Print Report</el-button>
           </div>
         </el-form>
       </el-tab-pane>
@@ -123,6 +123,7 @@ import { getSubordinateAPI } from './Resource'
 import { setDepartmentAPI } from './Resource'
 import { updateImageAPI } from './Resource'
 import { setHierarchyAPI } from './Resource'
+import { getReportFileAPI } from './Resource'
 import firebase from './Libraries/firebase'
 
 let storage = firebase.storage();
@@ -262,6 +263,14 @@ export default {
             console.log(error)
         }
         location.reload();
+      },
+      async printReport() {
+        let createRes
+        try {
+            createRes = await getReportFileAPI.getReportFile()
+        } catch (error) {
+            console.log(error)
+        }
       },
       async setHierarchy() {
         let createRes
