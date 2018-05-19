@@ -89,6 +89,7 @@
             <!-- subordinate part -->
             <div v-else>
                 <div align="right">
+                    <el-button @click="transferTask()" style="margin-bottom: 10px" type="warning">Transfer task</el-button>
                     <el-button @click="createLeaveForm()" style="margin-bottom: 10px" type="info">Create leave form <i class="fas fa-plus"></i></el-button>
                 </div>
                 <div class="dashboard--title" align="left">
@@ -123,12 +124,14 @@
         </el-row>
         <leave-form-dialog :leaveList="leaveFormList"></leave-form-dialog>
         <create-task-dialog :taskList="taskList"></create-task-dialog>
+        <transfer-task-dialog :transferList="transferList"></transfer-task-dialog>
     </div>
 </template>
 
 <script>
 import LeaveFormDialog from '@/components/Dialog/LeaveFormDialog'
 import CreateTaskDialog from '@/components/Dialog/CreateTaskDialog'
+import TransferTaskDialog from '@/components/Dialog/TransferTaskDialog'
 import { getSubordinateAPI, getTaskAPI, getHistoryAPI } from './Resource/index'
 
 export default {
@@ -140,6 +143,11 @@ export default {
             },
             taskList: {
                 dialogVisible: false
+            },
+            transferList: {
+                dialogVisible: false,
+                subordinateList: [],
+                taskId: ''
             },
             tableData: [{
                 created_at: '',
@@ -182,6 +190,9 @@ export default {
         console.log('type', this.type)
     },
     methods: {
+        transferTask () {
+            this.transferList.dialogVisible = true
+        },
         async fetchSubordinate () {
             let fetchRes
             try {
@@ -190,6 +201,7 @@ export default {
                 console.log(error)
             }
             console.log('fetchRes', fetchRes)
+            this.transferList.subordinateList = fetchRes.data
             this.tableData = fetchRes.data
         },
         async fetchTask() {
@@ -223,6 +235,8 @@ export default {
                 console.log(error)
             }
             console.log('fetch response', fetchRes)
+            this.transferList.taskId = fetchRes.data[0].id
+            console.log('bbbbbbbbbbbb', fetchRes.data[0].id)
             this.tableSubTask = fetchRes.data
         },
         handleOpen(key, keyPath) {
@@ -240,7 +254,8 @@ export default {
     },
     components: {
         LeaveFormDialog,
-        CreateTaskDialog
+        CreateTaskDialog,
+        TransferTaskDialog
     }
 }
 </script>

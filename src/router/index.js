@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import DashboardLayout from '@/components/DashboardLayout'
 import UserManagement from '@/components/UserManagement'
+import LeaveRequest from '@/components/LeaveRequest'
 import Admin from '@/components/Admin'
 
 Vue.use(Router)
@@ -29,6 +30,11 @@ export default new Router({
       path: '/admin',
       name: 'Admin',
       component: Admin
+    },
+    {
+      path: '/leave-request',
+      name: 'LeaveRequest',
+      component: LeaveRequest
     }
   ]
 })

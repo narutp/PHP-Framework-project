@@ -20,7 +20,7 @@
                     <el-date-picker type="daterange" placeholder="Pick a date" v-model="form.date"></el-date-picker>
                 </div>
             </el-form-item>
-            <el-form-item label="Select substitute user">
+            <!-- <el-form-item label="Select substitute user">
                 <div align="left">
                     <el-select v-model="form.substitute" placeholder="Please select substitute">
                         <el-option
@@ -31,7 +31,7 @@
                         </el-option>
                     </el-select>
                 </div>
-            </el-form-item>
+            </el-form-item> -->
         </el-form>
         <span slot="footer" class="dialog-footer">
             <el-button @click="leaveList.dialogVisible = false">Cancel</el-button>
@@ -76,12 +76,16 @@ export default {
           let date2 = moment(this.form.date[1]).format('YYYY-MM-DD')
           let res
           try {
-              res = await createLeaveAPI.createLeaveForm(this.form.type, date1, date2, this.form.substitute)
+              res = await createLeaveAPI.createLeaveForm(this.form.type, date1, date2)
           } catch (error) {
               console.log(error)
           }
           console.log('res', res)
-          this.leaveList.dialogVisible = false
+          if (res.data.success === false) {
+              this.$message(res.data.message)
+          } else {
+              this.leaveList.dialogVisible = false
+          }
       }
   }
 }
