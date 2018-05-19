@@ -124,12 +124,14 @@
         </el-row>
         <leave-form-dialog :leaveList="leaveFormList"></leave-form-dialog>
         <create-task-dialog :taskList="taskList"></create-task-dialog>
+        <transfer-task-dialog :transferList="transferList"></transfer-task-dialog>
     </div>
 </template>
 
 <script>
 import LeaveFormDialog from '@/components/Dialog/LeaveFormDialog'
 import CreateTaskDialog from '@/components/Dialog/CreateTaskDialog'
+import TransferTaskDialog from '@/components/Dialog/TransferTaskDialog'
 import { getSubordinateAPI, getTaskAPI, getHistoryAPI } from './Resource/index'
 
 export default {
@@ -143,7 +145,8 @@ export default {
                 dialogVisible: false
             },
             transferList: {
-                dialogVisible: false
+                dialogVisible: false,
+                subordinateList: []
             },
             tableData: [{
                 created_at: '',
@@ -187,7 +190,7 @@ export default {
     },
     methods: {
         transferTask () {
-
+            this.transferList.dialogVisible = true
         },
         async fetchSubordinate () {
             let fetchRes
@@ -197,6 +200,7 @@ export default {
                 console.log(error)
             }
             console.log('fetchRes', fetchRes)
+            this.transferList.subordinateList = fetchRes.data
             this.tableData = fetchRes.data
         },
         async fetchTask() {
@@ -247,7 +251,8 @@ export default {
     },
     components: {
         LeaveFormDialog,
-        CreateTaskDialog
+        CreateTaskDialog,
+        TransferTaskDialog
     }
 }
 </script>
