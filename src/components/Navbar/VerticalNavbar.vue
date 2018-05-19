@@ -1,14 +1,14 @@
 <template>
     <div class="navbar--container">
         <el-menu v-if="user_type === 'supervisor'" default-active="1" class="navbar--navWrapper" @open="handleOpen" @close="handleClose">
-            <img class="navbar--thumbnail" src="@/assets/thumbnail.png"/>
+            <img class="navbar--thumbnail" :src="imageUrl"/>
             <p class="navbar--user-name" v-on:click="editUser()">{{ name }}</p>
             <p style="margin-bottom: 20px; color: grey; font-size: 12px;">{{ user_type }}</p>
             <el-menu-item index="1" @click="navigateToHome()"><div align="left">Home</div></el-menu-item>
             <el-menu-item index="2" @click="navigateToLeaveRequest()"><div align="left">Leave request</div></el-menu-item>
         </el-menu>
         <el-menu v-else default-active="1" class="navbar--navWrapper" @open="handleOpen" @close="handleClose">
-            <img class="navbar--thumbnail" src="@/assets/thumbnail.png"/>
+            <img class="navbar--thumbnail" :src="imageUrl"/>
             <p class="navbar--user-name" v-on:click="editUser()">{{ name }}</p>
             <p style="margin-bottom: 20px; color: grey; font-size: 12px;">{{ user_type }}</p>
             <el-menu-item index="1" @click="navigateToHome()"><div align="left">Home</div></el-menu-item>
@@ -22,7 +22,8 @@ export default {
     data() {
         return {
             name: '',
-            user_type: ''
+            user_type: '',
+            imageUrl: ''
         }
     },
     async mounted() {
@@ -50,6 +51,7 @@ export default {
             }
             this.name = getUserRes.data.name
             this.user_type = userType
+            this.imageUrl = getUserRes.data.profile_picture
             loader.hide()
         }
     }

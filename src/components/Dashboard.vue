@@ -89,6 +89,7 @@
             <!-- subordinate part -->
             <div v-else>
                 <div align="right">
+                    <el-button @click="transferTask()" style="margin-bottom: 10px" type="warning">Transfer task</el-button>
                     <el-button @click="createLeaveForm()" style="margin-bottom: 10px" type="info">Create leave form <i class="fas fa-plus"></i></el-button>
                 </div>
                 <div class="dashboard--title" align="left">
@@ -141,6 +142,9 @@ export default {
             taskList: {
                 dialogVisible: false
             },
+            transferList: {
+                dialogVisible: false
+            },
             tableData: [{
                 created_at: '',
                 name: '',
@@ -182,6 +186,9 @@ export default {
         console.log('type', this.type)
     },
     methods: {
+        transferTask () {
+
+        },
         async fetchSubordinate () {
             let fetchRes
             try {

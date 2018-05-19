@@ -5,6 +5,7 @@
         <el-form ref="form" :model="form" label-width="120px">
           <div style="padding-left: 300px; padding-right: 300px;">
             <el-table
+              id="testTable"
               :data="user"
               border
               style="width: 100%">
@@ -19,7 +20,7 @@
               </el-table-column>
               <el-table-column
                 prop="type"
-                label="Roll">
+                label="Role">
               </el-table-column>
               <el-table-column
                 prop="department"
@@ -27,10 +28,13 @@
               </el-table-column>
             </el-table>
           </div>
+          <div style="padding-top: 1rem;">
+            <el-button @click="tableToExcel('testTable', 'User Table')">Print Report</el-button>
+          </div>
         </el-form>
       </el-tab-pane>
 
-      <el-tab-pane label="Create">
+      <el-tab-pane label="Create user">
         <el-form ref="form" :model="form" label-width="120px">
           <div style="padding-left: 300px; padding-right: 300px;">
             <el-form-item label="Name: " prop="username" align="left">
@@ -68,23 +72,21 @@
           
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="Set roll">
+      <el-tab-pane label="Set hierarchy of roles">
         <el-form ref="form" :model="form" label-width="120px">
           <div style="padding-left: 300px; padding-right: 300px;">
-            <el-form-item label="Name" align="left">
-              <el-select v-model="form.id_edit" placeholder="Name">
-                <el-option v-for='item in user' :key='item.id' :label="item.name" :value="item.id"></el-option>
+            <el-form-item label="Supervisors" align="left">
+              <el-select v-model="form.supervisor_id" placeholder="supervisors">
+                <el-option v-for='item in supervisor' :key='item.id' :label="item.name" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="Type" align="left">
-              <el-select v-model="form.type_edit" placeholder="type">
-                <el-option label="Admin" value="admin"></el-option>
-                <el-option label="Supervisor" value="supervisor"></el-option>
-                <el-option label="Subordinates" value="subordinate"></el-option>
+            <el-form-item label="Subordinates" align="left">
+              <el-select v-model="form.subordinate_id" placeholder="subordinates">
+                <el-option v-for='item in subordinate' :key='item.id' :label="item.name" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="manageUser()">Confirm</el-button>
+              <el-button type="primary" @click="setHierarchy()">Confirm</el-button>
             </el-form-item>
           </div>
         </el-form>
@@ -116,7 +118,17 @@ import axios from 'axios'
 import { createUserAPI } from './Resource'
 import { manageUserAPI } from './Resource'
 import { getUsersAPI } from './Resource'
+import { getSupervisorAPI } from './Resource'
+import { getSubordinateAPI } from './Resource'
 import { setDepartmentAPI } from './Resource'
+import { updateImageAPI } from './Resource'
+import { setHierarchyAPI } from './Resource'
+import firebase from './Libraries/firebase'
+
+let storage = firebase.storage();
+let storageRef = storage.ref();
+let imagesRef = storageRef.child('images');
+
 export default {
     name: 'Admin',
     data() {
@@ -136,19 +148,28 @@ export default {
           type_edit: '', 
           users: [],
           id_edit: null,
-          department: ''
+          department: '',
+          supervisor_id: '',
+          subordinate_id: ''
         },
-        user: []
+        supervisor: [],
+        subordinate: [],
+        user: [],
+        fileList: []
       }
     },
     async mounted(){
-      let users
+      let users,supervisors,subordinates
       try {
           users = await getUsersAPI.getUsers()
+          supervisors = await getSupervisorAPI.getSupervisorList()
+          subordinates = await getSubordinateAPI.getSubordinateList()
       } catch (error) {
           console.log(error)
       }
       this.user = users.data
+      this.supervisor = supervisors.data
+      this.subordinate = subordinates.data
     },
     methods: {
       async createUser() {
@@ -162,19 +183,90 @@ export default {
         }
         location.reload();
       },
-      async getUsers() {
-        let users
-        try {
-            users = await GetUsersAPI.getUsers()
-        } catch (error) {
-            console.log(error)
-        }
-        this.users = users
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(`The limit is 1, you selected ${files.length} files this time, add up to ${files.length + fileList.length} totally`);
+      },
+      beforeRemove(file, fileList) {
+        return this.$confirm(`Delete ${ file.name }？`);
+      },
+      async handleClickPrintReport() {
+        console.log('set profile')
+        console.log('file',this.$refs.upload.uploadFiles[0])
+        // File or Blob named mountains.jpg
+        var file = this.$refs.upload.uploadFiles[0].raw
+
+        // Create the file metadata
+        var metadata = {
+          contentType: 'image/jpeg'
+        };
+
+        // Upload file and metadata to the object 'images/mountains.jpg'
+        var uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
+
+        // Listen for state changes, errors, and completion of the upload.
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+          function(snapshot) {
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+              case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+              case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
+            }
+          }, function(error) {
+
+          // A full list of error codes is available at
+          // https://firebase.google.com/docs/storage/web/handle-errors
+          switch (error.code) {
+            case 'storage/unauthorized':
+              // User doesn't have permission to access the object
+              break;
+
+            case 'storage/canceled':
+              // User canceled the upload
+              break;
+
+            case 'storage/unknown':
+              // Unknown error occurred, inspect error.serverResponse
+              break;
+          }
+        }, function() {
+          // Upload completed successfully, now we can get the download URL
+          uploadTask.snapshot.ref.getDownloadURL().then(async function(downloadURL) {
+            console.log('File available at', downloadURL);
+            let createRes
+            try {
+                createRes = await updateImageAPI.updateImage(downloadURL)
+            } catch (error) {
+                console.log(error)
+            }
+            location.reload();
+          });
+        });
       },
       async manageUser() {
         let createRes
         try {
             createRes = await manageUserAPI.manageUser(this.form.id_edit, this.form.type_edit)
+        } catch (error) {
+            console.log(error)
+        }
+        location.reload();
+      },
+      async setHierarchy() {
+        let createRes
+        try {
+            createRes = await setHierarchyAPI.setHierarchy(this.form.supervisor_id, this.form.subordinate_id)
         } catch (error) {
             console.log(error)
         }
