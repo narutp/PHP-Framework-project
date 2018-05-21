@@ -35,21 +35,21 @@
       </el-tab-pane>
 
       <el-tab-pane label="Create user">
-        <el-form ref="form" :model="form" label-width="120px">
+        <el-form ref="form2" :model="form" :rules="rules" label-width="120px">
           <div style="padding-left: 300px; padding-right: 300px;">
-            <el-form-item label="Name: " prop="username" align="left">
+            <el-form-item label="Name: " prop="name" align="left">
               <el-input v-model="form.name"></el-input>
             </el-form-item>
-            <el-form-item label="E-mail: ">
+            <el-form-item label="E-mail: " prop="email">
               <el-input v-model="form.email"></el-input>
             </el-form-item>
-            <el-form-item label="Password" prop="pass">
+            <el-form-item label="Password" prop="password">
               <el-input type="password" v-model="form.password" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="Line ID: ">
+            <el-form-item label="Line ID: " prop="lineid">
               <el-input v-model="form.lineid"></el-input>
             </el-form-item>
-            <el-form-item label="Address: ">
+            <el-form-item label="Address: " prop="address">
               <el-input v-model="form.address"></el-input>
             </el-form-item>
             <el-form-item label="Type" align="left">
@@ -59,14 +59,14 @@
                 <el-option label="Subordinates" value="subordinate"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="Facebook: ">
+            <el-form-item label="Facebook: " prop="facebook">
               <el-input v-model="form.facebook"></el-input>
             </el-form-item>
-            <el-form-item label="Phone Number: ">
+            <el-form-item label="Phone Number: " prop="phone_number">
               <el-input v-model="form.phone_number"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="createUser()">Create</el-button>
+              <el-button type="primary" @click="createUser('form2')">Create</el-button>
             </el-form-item>
           </div>
           
@@ -92,18 +92,18 @@
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="Set department">
-        <el-form ref="form" :model="form" label-width="120px">
+        <el-form ref="form4" :model="form" :rules="rules2" label-width="120px">
           <div style="padding-left: 300px; padding-right: 300px;">
             <el-form-item label="Name" align="left">
               <el-select v-model="form.id_edit" placeholder="Name">
                 <el-option v-for='item in user' :key='item.id' :label="item.name" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="Department: " align="left">
+            <el-form-item label="Department: " prop="department" align="left">
               <el-input v-model="form.department"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="setDepartment()">Confirm</el-button>
+              <el-button type="primary" @click="setDepartment('form4')">Confirm</el-button>
             </el-form-item>
           </div>
         </el-form>
@@ -125,6 +125,7 @@ import { updateImageAPI } from './Resource'
 import { setHierarchyAPI } from './Resource'
 import { getReportFileAPI } from './Resource'
 import firebase from './Libraries/firebase'
+import fileSaver from 'file-saver'
 
 let storage = firebase.storage();
 let storageRef = storage.ref();
@@ -133,6 +134,62 @@ let imagesRef = storageRef.child('images');
 export default {
     name: 'Admin',
     data() {
+      var validateName = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please input the name'));
+        } else {
+          callback();
+        }
+      };
+      var validateEmail = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please input the email'));
+        } else {
+          callback();
+        }
+      };
+      var validatePassword = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please input the password'));
+        } else {
+          callback();
+        }
+      };
+      var validateLineid = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please input the Line id'));
+        } else {
+          callback();
+        }
+      };
+      var validateAddress = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please input the address'));
+        } else {
+          callback();
+        }
+      };
+      var validateFacebook = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please input the Facebook'));
+        } else {
+          callback();
+        }
+      };
+      var validatePhoneNumber = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please input the phone number'));
+        } else {
+          callback();
+        }
+      };
+      var validateDepartment = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('Please input the department'));
+        } else {
+          callback();
+        }
+      };
       return {
         header: "Admin",
         form: {
@@ -152,6 +209,35 @@ export default {
           department: '',
           supervisor_id: '',
           subordinate_id: ''
+        },
+        rules: {
+          name: [
+            { validator: validateName, trigger: 'blur' }
+          ],
+          email: [
+            { validator: validateEmail, trigger: 'blur' }
+          ],
+          password: [
+            { validator: validatePassword, trigger: 'blur' }
+          ],
+          lineid: [
+            { validator: validateLineid, trigger: 'blur' }
+          ],
+          address: [
+            { validator: validateAddress, trigger: 'blur' }
+          ],
+          facebook: [
+            { validator: validateFacebook, trigger: 'blur' }
+          ],
+          phone_number: [
+            { validator: validatePhoneNumber, trigger: 'blur' }
+          ]
+
+        },
+        rules2: {
+          department: [
+            { validator: validateDepartment, trigger: 'blur' }
+          ],
         },
         supervisor: [],
         subordinate: [],
@@ -173,7 +259,18 @@ export default {
       this.subordinate = subordinates.data
     },
     methods: {
-      async createUser() {
+      async createUser(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (!valid) {
+            console.log('error submit!!');
+            return false;
+          } else {
+            this.createUserConfirm();
+          }
+        });
+        
+      },
+      async createUserConfirm() {
         let createRes
         let is_admin = !(this.form.type == "supervisor" || this.form.type == "subordinate")
         try {
@@ -196,65 +293,6 @@ export default {
       beforeRemove(file, fileList) {
         return this.$confirm(`Delete ${ file.name }？`);
       },
-      async handleClickPrintReport() {
-        console.log('set profile')
-        console.log('file',this.$refs.upload.uploadFiles[0])
-        // File or Blob named mountains.jpg
-        var file = this.$refs.upload.uploadFiles[0].raw
-
-        // Create the file metadata
-        var metadata = {
-          contentType: 'image/jpeg'
-        };
-
-        // Upload file and metadata to the object 'images/mountains.jpg'
-        var uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
-
-        // Listen for state changes, errors, and completion of the upload.
-        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-          function(snapshot) {
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
-            switch (snapshot.state) {
-              case firebase.storage.TaskState.PAUSED: // or 'paused'
-                console.log('Upload is paused');
-                break;
-              case firebase.storage.TaskState.RUNNING: // or 'running'
-                console.log('Upload is running');
-                break;
-            }
-          }, function(error) {
-
-          // A full list of error codes is available at
-          // https://firebase.google.com/docs/storage/web/handle-errors
-          switch (error.code) {
-            case 'storage/unauthorized':
-              // User doesn't have permission to access the object
-              break;
-
-            case 'storage/canceled':
-              // User canceled the upload
-              break;
-
-            case 'storage/unknown':
-              // Unknown error occurred, inspect error.serverResponse
-              break;
-          }
-        }, function() {
-          // Upload completed successfully, now we can get the download URL
-          uploadTask.snapshot.ref.getDownloadURL().then(async function(downloadURL) {
-            console.log('File available at', downloadURL);
-            let createRes
-            try {
-                createRes = await updateImageAPI.updateImage(downloadURL)
-            } catch (error) {
-                console.log(error)
-            }
-            location.reload();
-          });
-        });
-      },
       async manageUser() {
         let createRes
         try {
@@ -268,6 +306,8 @@ export default {
         let createRes
         try {
             createRes = await getReportFileAPI.getReportFile()
+            var file = new File([createRes.data], "report.xlsx", {type: "text/plain;charset=utf-8"});
+            fileSaver.saveAs(file);
         } catch (error) {
             console.log(error)
         }
@@ -281,7 +321,18 @@ export default {
         }
         location.reload();
       },
-      async setDepartment() {
+      async setDepartment(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (!valid) {
+            console.log('error submit!!');
+            return false;
+          } else {
+            this.setDepartmentConfirm();
+          }
+        });
+        
+      },
+      async setDepartmentConfirm() {
         let createRes
         try {
             createRes = await setDepartmentAPI.setDepartment(this.form.id_edit, this.form.department)
