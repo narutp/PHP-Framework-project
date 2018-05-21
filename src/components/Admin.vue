@@ -74,13 +74,13 @@
       </el-tab-pane>
       <el-tab-pane label="Set hierarchy of roles">
         <el-form ref="form" :model="form" label-width="120px">
-          <div style="padding-left: 300px; padding-right: 300px;">
-            <el-form-item label="Supervisors" align="left">
+          <!-- <div style="padding-left: 300px; padding-right: 300px;"> -->
+            <el-form-item label="" align="center">
               <el-select v-model="form.supervisor_id" placeholder="supervisors">
                 <el-option v-for='item in supervisor' :key='item.id' :label="item.name" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="Subordinates" align="left">
+            <el-form-item label="" align="center">
               <el-select v-model="form.subordinate_id" placeholder="subordinates">
                 <el-option v-for='item in subordinate' :key='item.id' :label="item.name" :value="item.id"></el-option>
               </el-select>
@@ -88,7 +88,7 @@
             <el-form-item>
               <el-button type="primary" @click="setHierarchy()">Confirm</el-button>
             </el-form-item>
-          </div>
+          <!-- </div> -->
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="Set department">
