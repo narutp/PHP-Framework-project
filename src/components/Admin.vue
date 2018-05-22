@@ -306,7 +306,7 @@ export default {
         let createRes
         try {
             createRes = await getReportFileAPI.getReportFile()
-            var file = new File([createRes.data], "report.xlsx", {type: "text/plain;charset=utf-8"});
+            var file = new File([createRes.data], "report.xlsx", {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
             fileSaver.saveAs(file);
         } catch (error) {
             console.log(error)

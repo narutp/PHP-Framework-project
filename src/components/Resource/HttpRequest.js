@@ -38,9 +38,10 @@ class HttpRequest {
         axiosInstance.defaults.headers.common[header.key] = header.value
     }
 
-    get(targetApi, data) {
+    get(targetApi, data, responseType) {
         return axiosInstance.get(targetApi, {
-            params: data
+            params: data,
+            responseType
         })
     }
 

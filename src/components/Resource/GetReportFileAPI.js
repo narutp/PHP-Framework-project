@@ -2,7 +2,7 @@ import HttpRequest from './HttpRequest'
 
 class GetReportFileAPI extends HttpRequest {
   getReportFile() {
-    return this.get('/export-data', { responseType: 'blob' })
+    return this.get('/export-data', {}, 'blob')
   }
 }
 
